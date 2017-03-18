@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="it_test_db@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.1">
+    <root id="1"/>
+    <schema id="2" parent="1" name="it_test_db">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="information_schema"/>
+    <schema id="4" parent="1" name="mydbtest"/>
+    <schema id="5" parent="1" name="mysql"/>
+    <schema id="6" parent="1" name="performance_schema"/>
+    <schema id="7" parent="1" name="sys"/>
+    <schema id="8" parent="1" name="test"/>
+    <table id="9" parent="2" name="companies"/>
+    <table id="10" parent="2" name="customers"/>
+    <table id="11" parent="2" name="developers"/>
+    <table id="12" parent="2" name="projects"/>
+    <table id="13" parent="2" name="skills"/>
+    <column id="14" parent="9" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="15" parent="9" name="id_project">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="16" parent="9" name="name">
+      <Position>3</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="17" parent="9" name="id_project">
+      <ColNames>id_project</ColNames>
+    </index>
+    <key id="18" parent="9" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="19" parent="9" name="companies_ibfk_1">
+      <ColNames>id_project</ColNames>
+      <RefSchemaName>it_test_db</RefSchemaName>
+      <RefTableName>projects</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="20" parent="10" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="21" parent="10" name="id_project">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="22" parent="10" name="name">
+      <Position>3</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="23" parent="10" name="id_project">
+      <ColNames>id_project</ColNames>
+    </index>
+    <key id="24" parent="10" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="25" parent="10" name="customers_ibfk_1">
+      <ColNames>id_project</ColNames>
+      <RefSchemaName>it_test_db</RefSchemaName>
+      <RefTableName>projects</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="26" parent="11" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="27" parent="11" name="name">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="28" parent="11" name="experience">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="29" parent="11" name="salary">
+      <Position>4</Position>
+      <DataType>int(11)|0</DataType>
+      <DefaultExpression>&apos;500&apos;</DefaultExpression>
+    </column>
+    <index id="30" parent="11" name="name">
+      <ColNames>name</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="31" parent="11" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="32" parent="11" name="name">
+      <ColNames>name</ColNames>
+      <UnderlyingIndexName>name</UnderlyingIndexName>
+    </key>
+    <column id="33" parent="12" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="34" parent="12" name="id_dev">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="35" parent="12" name="name">
+      <Position>3</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="36" parent="12" name="cost">
+      <Position>4</Position>
+      <DataType>int(11)|0</DataType>
+      <DefaultExpression>&apos;10000&apos;</DefaultExpression>
+    </column>
+    <index id="37" parent="12" name="id_dev">
+      <ColNames>id_dev</ColNames>
+    </index>
+    <key id="38" parent="12" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="39" parent="12" name="projects_ibfk_1">
+      <ColNames>id_dev</ColNames>
+      <RefSchemaName>it_test_db</RefSchemaName>
+      <RefTableName>developers</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="40" parent="13" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="41" parent="13" name="id_dev">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="42" parent="13" name="specialty">
+      <Position>3</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="43" parent="13" name="id_dev">
+      <ColNames>id_dev</ColNames>
+    </index>
+    <key id="44" parent="13" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="45" parent="13" name="skills_ibfk_1">
+      <ColNames>id_dev</ColNames>
+      <RefSchemaName>it_test_db</RefSchemaName>
+      <RefTableName>developers</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+  </database-model>
+</dataSource>

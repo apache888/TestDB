@@ -40,14 +40,14 @@ INSERT INTO skills (id_dev, specialty) VALUES (7, 'C#');
 
 INSERT INTO skills (id_dev, specialty) VALUES (8, 'C++');
 
-INSERT INTO projects (id_dev, name) VALUES (1, 'Game');
+INSERT INTO projects (id_dev, name) VALUES ((SELECT id FROM developers WHERE developers.name = 'Ivanov'), 'Game');
 INSERT INTO projects (id_dev, name) VALUES (3, 'Game');
 INSERT INTO projects (id_dev, name) VALUES (4, 'Game');
 INSERT INTO projects (id_dev, name) VALUES (6, 'Game');
 
-INSERT INTO projects (id_dev, name) VALUES (6, 'Agregator');
-INSERT INTO projects (id_dev, name) VALUES (7, 'Agregator');
-INSERT INTO projects (id_dev, name) VALUES (8, 'Agregator');
+INSERT INTO projects (id_dev, name) VALUES (6, 'Aggregator');
+INSERT INTO projects (id_dev, name) VALUES (7, 'Aggregator');
+INSERT INTO projects (id_dev, name) VALUES (8, 'Aggregator');
 
 INSERT INTO projects (id_dev, name) VALUES (8, 'Messenger');
 INSERT INTO projects (id_dev, name) VALUES (2, 'Messenger');
