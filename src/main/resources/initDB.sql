@@ -33,3 +33,4 @@ CREATE TABLE it_test_db.customers (
   name VARCHAR(100) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (id_project) REFERENCES it_test_db.projects (id));
+

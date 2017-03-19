@@ -40,7 +40,7 @@ INSERT INTO skills (id_dev, specialty) VALUES (7, 'C#');
 
 INSERT INTO skills (id_dev, specialty) VALUES (8, 'C++');
 
-INSERT INTO projects (id_dev, name) VALUES ((SELECT id FROM developers WHERE developers.name = 'Ivanov'), 'Game');
+INSERT INTO projects (id_dev, name) VALUES ( 1, 'Game');
 INSERT INTO projects (id_dev, name) VALUES (3, 'Game');
 INSERT INTO projects (id_dev, name) VALUES (4, 'Game');
 INSERT INTO projects (id_dev, name) VALUES (6, 'Game');
@@ -65,20 +65,21 @@ INSERT INTO projects (id_dev, name) VALUES (8, 'Tip-Tour');
 INSERT INTO projects (id_dev, name) VALUES (4, 'Tip-Tour');
 INSERT INTO projects (id_dev, name) VALUES (2, 'Tip-Tour');
 
-INSERT INTO companies (id_project, name) VALUES (1, 'IndyGame');
-INSERT INTO companies (id_project, name) VALUES (3, 'IndyGame');
+INSERT INTO companies (id_project, name) VALUES (
+  (SELECT DISTINCT id FROM projects WHERE projects.name = 'Game'), 'IndyGame');
+INSERT INTO companies (id_project, name) VALUES (8, 'IndyGame');
 
-INSERT INTO companies (id_project, name) VALUES (2, 'IT-Solutions');
-INSERT INTO companies (id_project, name) VALUES (4, 'IT-Solutions');
+INSERT INTO companies (id_project, name) VALUES (5, 'IT-Solutions');
+INSERT INTO companies (id_project, name) VALUES (12, 'IT-Solutions');
 
-INSERT INTO companies (id_project, name) VALUES (4, 'IT-HORECA');
-INSERT INTO companies (id_project, name) VALUES (5, 'IT-HORECA');
+INSERT INTO companies (id_project, name) VALUES (12, 'IT-HORECA');
+INSERT INTO companies (id_project, name) VALUES (18, 'IT-HORECA');
 
-INSERT INTO companies (id_project, name) VALUES (5, 'Gold Soft');
-INSERT INTO companies (id_project, name) VALUES (3, 'Gold Soft');
+INSERT INTO companies (id_project, name) VALUES (18, 'Gold Soft');
+INSERT INTO companies (id_project, name) VALUES (8, 'Gold Soft');
 
-INSERT INTO customers (id_project, name) VALUES (4, 'Fire Group');
-INSERT INTO customers (id_project, name) VALUES (2, 'Fire Group');
+INSERT INTO customers (id_project, name) VALUES (12, 'Fire Group');
 INSERT INTO customers (id_project, name) VALUES (5, 'Fire Group');
+INSERT INTO customers (id_project, name) VALUES (18, 'Fire Group');
 INSERT INTO customers (id_project, name) VALUES (1, 'Athic Mobile');
-INSERT INTO customers (id_project, name) VALUES (3, 'Speed Mail');
+INSERT INTO customers (id_project, name) VALUES (8, 'Speed Mail');
