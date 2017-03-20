@@ -1,85 +1,121 @@
-INSERT INTO developers (name, experience) VALUES ('Ivanov', 2);
-INSERT INTO developers (name, experience) VALUES ('Petrov', 3);
-INSERT INTO developers (name, experience) VALUES ('Sidorov', 5);
-INSERT INTO developers (name, experience) VALUES ('Baranov', 1);
-INSERT INTO developers (name, experience) VALUES ('Sushko', 10);
-INSERT INTO developers (name, experience) VALUES ('Radko', 2);
-INSERT INTO developers (name, experience) VALUES ('Tokovenko', 8);
-INSERT INTO developers (name, experience) VALUES ('Sadko', 2);
+INSERT INTO developers (name_dev, experience) VALUES ('Ivanov', 2);
+INSERT INTO developers (name_dev, experience) VALUES ('Petrov', 3);
+INSERT INTO developers (name_dev, experience) VALUES ('Sidorov', 5);
+INSERT INTO developers (name_dev, experience) VALUES ('Baranov', 1);
+INSERT INTO developers (name_dev, experience) VALUES ('Sushko', 10);
+INSERT INTO developers (name_dev, experience) VALUES ('Radko', 2);
+INSERT INTO developers (name_dev, experience) VALUES ('Dzubenko', 8);
+INSERT INTO developers (name_dev, experience) VALUES ('Sadko', 2);
+INSERT INTO developers (name_dev, experience) VALUES ('Golovko', 4);
+INSERT INTO developers (name_dev, experience) VALUES ('Buchak', 3);
 
-INSERT INTO skills (id_dev, specialty) VALUES (1, 'Java');
-INSERT INTO skills (id_dev, specialty) VALUES (1, 'C++');
-INSERT INTO skills (id_dev, specialty) VALUES (1, 'JS');
+INSERT INTO skills (specialty) VALUES ('Java');
+INSERT INTO skills (specialty) VALUES ('Scala');
+INSERT INTO skills (specialty) VALUES ('C++');
+INSERT INTO skills (specialty) VALUES ('C#');
+INSERT INTO skills (specialty) VALUES ('JS');
+INSERT INTO skills (specialty) VALUES ('PHP');
 
-INSERT INTO skills (id_dev, specialty) VALUES (2, 'JS');
-INSERT INTO skills (id_dev, specialty) VALUES (2, 'Java');
-INSERT INTO skills (id_dev, specialty) VALUES (2, 'C#');
+INSERT INTO projects (name_project) VALUES ('Game');
+INSERT INTO projects (name_project) VALUES ('Aggregator');
+INSERT INTO projects (name_project) VALUES ('Messenger');
+INSERT INTO projects (name_project) VALUES ('Restaurant');
+INSERT INTO projects (name_project) VALUES ('Tip-Tour');
+INSERT INTO projects (name_project) VALUES ('Online Shop');
+INSERT INTO projects (name_project) VALUES ('Store System');
+INSERT INTO projects (name_project) VALUES ('Tickets-online');
 
-INSERT INTO skills (id_dev, specialty) VALUES (3, 'Java');
-INSERT INTO skills (id_dev, specialty) VALUES (3, 'C++');
-INSERT INTO skills (id_dev, specialty) VALUES (3, 'C#');
-INSERT INTO skills (id_dev, specialty) VALUES (3, 'JS');
-INSERT INTO skills (id_dev, specialty) VALUES (3, 'PHP');
+INSERT INTO companies (name_company) VALUES ('IndyGame');
+INSERT INTO companies (name_company) VALUES ('IT-Solutions');
+INSERT INTO companies (name_company) VALUES ('IT-HORECA');
+INSERT INTO companies (name_company) VALUES ('Gold Soft');
 
-INSERT INTO skills (id_dev, specialty) VALUES (4, 'PHP');
-INSERT INTO skills (id_dev, specialty) VALUES (4, 'JS');
+INSERT INTO customers (name_customer) VALUES ('Fire Group');
+INSERT INTO customers (name_customer) VALUES ('Athic Mobile');
+INSERT INTO customers (name_customer) VALUES ('Speed Mail');
+INSERT INTO customers (name_customer) VALUES ('Product Group');
 
-INSERT INTO skills (id_dev, specialty) VALUES (5, 'Java');
-INSERT INTO skills (id_dev, specialty) VALUES (5, 'C++');
-INSERT INTO skills (id_dev, specialty) VALUES (5, 'C#');
-INSERT INTO skills (id_dev, specialty) VALUES (5, 'JS');
-INSERT INTO skills (id_dev, specialty) VALUES (5, 'PHP');
+INSERT INTO developers_skills VALUES (1, 1);
+INSERT INTO developers_skills VALUES (1, 3);
+INSERT INTO developers_skills VALUES (2, 1);
+INSERT INTO developers_skills VALUES (2, 3);
+INSERT INTO developers_skills VALUES (2, 5);
+INSERT INTO developers_skills VALUES (3, 1);
+INSERT INTO developers_skills VALUES (3, 2);
+INSERT INTO developers_skills VALUES (3, 3);
+INSERT INTO developers_skills VALUES (4, 5);
+INSERT INTO developers_skills VALUES (4, 6);
+INSERT INTO developers_skills VALUES (5, 1);
+INSERT INTO developers_skills VALUES (5, 2);
+INSERT INTO developers_skills VALUES (5, 3);
+INSERT INTO developers_skills VALUES (5, 4);
+INSERT INTO developers_skills VALUES (5, 5);
+INSERT INTO developers_skills VALUES (5, 6);
+INSERT INTO developers_skills VALUES (6, 1);
+INSERT INTO developers_skills VALUES (6, 5);
+INSERT INTO developers_skills VALUES (7, 5);
+INSERT INTO developers_skills VALUES (7, 1);
+INSERT INTO developers_skills VALUES (7, 2);
+INSERT INTO developers_skills VALUES (7, 3);
+INSERT INTO developers_skills VALUES (8, 3);
+INSERT INTO developers_skills VALUES (8, 4);
+INSERT INTO developers_skills VALUES (8, 5);
+INSERT INTO developers_skills VALUES (9, 1);
+INSERT INTO developers_skills VALUES (9, 2);
+INSERT INTO developers_skills VALUES (9, 3);
+INSERT INTO developers_skills VALUES (9, 4);
+INSERT INTO developers_skills VALUES (10, 3);
+INSERT INTO developers_skills VALUES (10, 4);
+INSERT INTO developers_skills VALUES (10, 5);
+INSERT INTO developers_skills VALUES (10, 6);
 
-INSERT INTO skills (id_dev, specialty) VALUES (6, 'PHP');
-INSERT INTO skills (id_dev, specialty) VALUES (6, 'JS');
-INSERT INTO skills (id_dev, specialty) VALUES (6, 'Java');
+INSERT INTO projects_developers VALUES (1, 1);
+INSERT INTO projects_developers VALUES (1, 4);
+INSERT INTO projects_developers VALUES (1, 8);
+INSERT INTO projects_developers VALUES (2, 2);
+INSERT INTO projects_developers VALUES (2, 3);
+INSERT INTO projects_developers VALUES (2, 10);
+INSERT INTO projects_developers VALUES (3, 3);
+INSERT INTO projects_developers VALUES (3, 6);
+INSERT INTO projects_developers VALUES (3, 9);
+INSERT INTO projects_developers VALUES (4, 3);
+INSERT INTO projects_developers VALUES (4, 4);
+INSERT INTO projects_developers VALUES (4, 5);
+INSERT INTO projects_developers VALUES (4, 7);
+INSERT INTO projects_developers VALUES (4, 9);
+INSERT INTO projects_developers VALUES (5, 2);
+INSERT INTO projects_developers VALUES (5, 7);
+INSERT INTO projects_developers VALUES (5, 9);
+INSERT INTO projects_developers VALUES (6, 1);
+INSERT INTO projects_developers VALUES (6, 3);
+INSERT INTO projects_developers VALUES (6, 10);
+INSERT INTO projects_developers VALUES (7, 5);
+INSERT INTO projects_developers VALUES (7, 7);
+INSERT INTO projects_developers VALUES (7, 9);
+INSERT INTO projects_developers VALUES (7, 8);
+INSERT INTO projects_developers VALUES (8, 1);
+INSERT INTO projects_developers VALUES (8, 3);
+INSERT INTO projects_developers VALUES (8, 5);
+INSERT INTO projects_developers VALUES (8, 10);
 
-INSERT INTO skills (id_dev, specialty) VALUES (7, 'Java');
-INSERT INTO skills (id_dev, specialty) VALUES (7, 'C++');
-INSERT INTO skills (id_dev, specialty) VALUES (7, 'C#');
+INSERT INTO companies_projects VALUES (1, 1, 100);
+INSERT INTO companies_projects VALUES (1, 5, 30);
+INSERT INTO companies_projects VALUES (2, 5, 70);
+INSERT INTO companies_projects VALUES (2, 4, 30);
+INSERT INTO companies_projects VALUES (2, 7, 50);
+INSERT INTO companies_projects VALUES (2, 2, 100);
+INSERT INTO companies_projects VALUES (3, 4, 70);
+INSERT INTO companies_projects VALUES (3, 7, 50);
+INSERT INTO companies_projects VALUES (4, 3, 100);
+INSERT INTO companies_projects VALUES (4, 6, 100);
+INSERT INTO companies_projects VALUES (4, 8, 100);
 
-INSERT INTO skills (id_dev, specialty) VALUES (8, 'C++');
+INSERT INTO customers_projects  VALUES (2, 1);
+INSERT INTO customers_projects  VALUES (2, 8);
+INSERT INTO customers_projects  VALUES (3, 3);
+INSERT INTO customers_projects  VALUES (4, 4);
+INSERT INTO customers_projects  VALUES (4, 6);
+INSERT INTO customers_projects  VALUES (4, 7);
+INSERT INTO customers_projects  VALUES (1, 2);
+INSERT INTO customers_projects  VALUES (1, 5);
 
-INSERT INTO projects (id_dev, name) VALUES ( 1, 'Game');
-INSERT INTO projects (id_dev, name) VALUES (3, 'Game');
-INSERT INTO projects (id_dev, name) VALUES (4, 'Game');
-INSERT INTO projects (id_dev, name) VALUES (6, 'Game');
-
-INSERT INTO projects (id_dev, name) VALUES (6, 'Aggregator');
-INSERT INTO projects (id_dev, name) VALUES (7, 'Aggregator');
-INSERT INTO projects (id_dev, name) VALUES (8, 'Aggregator');
-
-INSERT INTO projects (id_dev, name) VALUES (8, 'Messenger');
-INSERT INTO projects (id_dev, name) VALUES (2, 'Messenger');
-INSERT INTO projects (id_dev, name) VALUES (5, 'Messenger');
-INSERT INTO projects (id_dev, name) VALUES (1, 'Messenger');
-
-INSERT INTO projects (id_dev, name) VALUES (1, 'Restaurant');
-INSERT INTO projects (id_dev, name) VALUES (3, 'Restaurant');
-INSERT INTO projects (id_dev, name) VALUES (7, 'Restaurant');
-INSERT INTO projects (id_dev, name) VALUES (4, 'Restaurant');
-INSERT INTO projects (id_dev, name) VALUES (6, 'Restaurant');
-INSERT INTO projects (id_dev, name) VALUES (8, 'Restaurant');
-
-INSERT INTO projects (id_dev, name) VALUES (8, 'Tip-Tour');
-INSERT INTO projects (id_dev, name) VALUES (4, 'Tip-Tour');
-INSERT INTO projects (id_dev, name) VALUES (2, 'Tip-Tour');
-
-INSERT INTO companies (id_project, name) VALUES (
-  (SELECT DISTINCT id FROM projects WHERE projects.name = 'Game'), 'IndyGame');
-INSERT INTO companies (id_project, name) VALUES (8, 'IndyGame');
-
-INSERT INTO companies (id_project, name) VALUES (5, 'IT-Solutions');
-INSERT INTO companies (id_project, name) VALUES (12, 'IT-Solutions');
-
-INSERT INTO companies (id_project, name) VALUES (12, 'IT-HORECA');
-INSERT INTO companies (id_project, name) VALUES (18, 'IT-HORECA');
-
-INSERT INTO companies (id_project, name) VALUES (18, 'Gold Soft');
-INSERT INTO companies (id_project, name) VALUES (8, 'Gold Soft');
-
-INSERT INTO customers (id_project, name) VALUES (12, 'Fire Group');
-INSERT INTO customers (id_project, name) VALUES (5, 'Fire Group');
-INSERT INTO customers (id_project, name) VALUES (18, 'Fire Group');
-INSERT INTO customers (id_project, name) VALUES (1, 'Athic Mobile');
-INSERT INTO customers (id_project, name) VALUES (8, 'Speed Mail');

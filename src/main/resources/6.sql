@@ -1,8 +1,6 @@
-/*SELECT avg(salary) FROM developers
-WHERE id IN (SELECT id_dev FROM projects WHERE projects.name = (
-  SELECT  projects.name FROM projects ORDER BY cost ASC LIMIT 0,1));*/
-
-SELECT p.name, avg(d.salary) s  FROM developers d, projects p
-WHERE d.id = p.id_dev
-GROUP BY p.cost
-ORDER BY s asc LIMIT 0,1;
+SELECT  projects.name_project, projects.cost, avg(developers.salary) avg
+FROM projects
+  JOIN projects_developers ON projects.id = projects_developers.project_id
+  JOIN developers ON projects_developers.developer_id = developers.id
+GROUP BY projects.name_project
+ORDER BY avg ASC ;
