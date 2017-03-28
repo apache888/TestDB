@@ -1,6 +1,6 @@
 package dao;
 
-import model.Project;
+import model.entities.Project;
 
 import java.util.List;
 

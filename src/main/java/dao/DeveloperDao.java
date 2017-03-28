@@ -1,6 +1,7 @@
 package dao;
 
-import model.Developer;
+import dao.jdbc.JdbcDeveloperDaoImpl;
+import model.entities.Developer;
 
 import java.util.List;
 
@@ -8,25 +9,26 @@ import java.util.List;
  * Create by Roman Hayda on 24.03.2017.
  */
 public class DeveloperDao implements EntityDao<Developer> {
+    private JdbcDeveloperDaoImpl jdbcDeveloperDao = new JdbcDeveloperDaoImpl();
 
     public void create() {
-
+        jdbcDeveloperDao.create();
     }
 
     public Developer getById(int id) {
-        return null;
+        return jdbcDeveloperDao.getById(id);
     }
 
     public List<Developer> getAll() {
-        return null;
+        return jdbcDeveloperDao.getAll();
     }
 
     public void update(int id) {
-
+        jdbcDeveloperDao.update(id);
     }
 
     public void delete(int id) {
-
+        jdbcDeveloperDao.delete(id);
     }
 
 }

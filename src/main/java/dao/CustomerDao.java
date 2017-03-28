@@ -1,6 +1,6 @@
 package dao;
 
-import model.Customer;
+import model.entities.Customer;
 
 import java.util.List;
 

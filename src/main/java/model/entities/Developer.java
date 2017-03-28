@@ -1,4 +1,4 @@
-package model;
+package model.entities;
 
 import java.util.Set;
 
@@ -32,5 +32,20 @@ public class Developer extends BaseObject {
 
     public Set<Skill> getSkills() {
         return skills;
+    }
+
+    public void setSkills(Set<Skill> skills) {
+        this.skills = skills;
+    }
+
+    @Override
+    public String toString() {
+        return "Developer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", experience=" + experience +
+                ", salary=" + salary +
+                ", skills=" + skills +
+                '}';
     }
 }
