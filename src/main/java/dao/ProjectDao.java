@@ -1,5 +1,6 @@
 package dao;
 
+import dao.jdbc.JdbcProjectDaoImpl;
 import model.entities.Project;
 
 import java.util.List;
@@ -8,9 +9,10 @@ import java.util.List;
  * Create by Roman Hayda on 24.03.2017.
  */
 public class ProjectDao implements EntityDao<Project> {
+    private JdbcProjectDaoImpl jdbcProjectDao = new JdbcProjectDaoImpl();
 
     public void create() {
-
+        jdbcProjectDao.create();
     }
 
     public Project getById(int id) {

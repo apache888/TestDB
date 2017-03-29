@@ -1,11 +1,7 @@
 package view;
 
-import controller.Controller;
-import controller.DeveloperController;
-import controller.SkillController;
-import model.DeveloperModel;
-import model.Model;
-import model.SkillModel;
+import controller.*;
+import model.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -53,12 +49,33 @@ public class ConsoleHelper {
                         controller.setModel(model);
                         showCommandsMenu();
                         break;
-//                    case 2:
-//                        view.fireEventSortByCL();
-//                        break;
-//                    case 3:
-//                        view.fireEventFindByRange();
-//                        break;
+                    case 2:
+                        view = new ProjectView();
+                        model = new ProjectModel();
+                        controller = new ProjectController();
+                        view.setController(controller);
+                        controller.setView(view);
+                        controller.setModel(model);
+                        showCommandsMenu();
+                        break;
+                    case 3:
+                        view = new CompanyView();
+                        model = new CompanyModel();
+                        controller = new CompanyController();
+                        view.setController(controller);
+                        controller.setView(view);
+                        controller.setModel(model);
+                        showCommandsMenu();
+                        break;
+                    case 4:
+                        view = new CustomerView();
+                        model = new CustomerModel();
+                        controller = new CustomerController();
+                        view.setController(controller);
+                        controller.setView(view);
+                        controller.setModel(model);
+                        showCommandsMenu();
+                        break;
                     case 5:
                         return;
                     default:
@@ -84,17 +101,20 @@ public class ConsoleHelper {
                         "5 - Back\n");
                 switch (Integer.parseInt(readString())) {
                     case 0:
-//                        view.fireEventShowStock();
+                        view.fireEventCreate();
                         break;
                     case 1:
-                        controller.onGetAll();
+                        view.fireEventGetAll();
                         break;
                     case 2:
-                        controller.onGetById();
+                        view.fireEventGetById();
                         break;
-//                    case 3:
-//                        view.fireEventFindByRange();
-//                        break;
+                    case 3:
+                        view.fireEventUpdate();
+                        break;
+                    case 4:
+                        view.fireEventDelete();
+                        break;
                     case 5:
                         return;
                     default:

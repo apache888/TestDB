@@ -19,6 +19,7 @@ public class JdbcDeveloperDaoImpl {
 
     private static final String SELECT_BY_ID = "SELECT * FROM developers WHERE id=";
     private static final String SELECT_ALL = "SELECT * FROM developers";
+    private static final String DELETE_BY_ID = "DELETE FROM developers WHERE id=";
 
     private static final String SELECT_DEV_SKILLS_BY_ID = "SELECT skills.* FROM skills JOIN developers_skills on skill_id= skills.id and developer_id =";
 
@@ -28,7 +29,6 @@ public class JdbcDeveloperDaoImpl {
 
     public Developer getById(int id) {
         Developer developer = null;
-
         try(Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SELECT_BY_ID + id)){
@@ -66,12 +66,11 @@ public class JdbcDeveloperDaoImpl {
             ResultSet resultSet = statement.executeQuery(SELECT_ALL)){
 
             while (resultSet.next()) {
-                Developer developer;
                 int dev_id = resultSet.getInt("id");
                 String name = resultSet.getString("name_dev");
                 int exp = resultSet.getInt("experience");
                 int salary = resultSet.getInt("salary");
-                developer = new Developer(dev_id, name);
+                Developer developer = new Developer(dev_id, name);
                 developer.setExperience(exp);
                 developer.setSalary(salary);
 
@@ -98,7 +97,11 @@ public class JdbcDeveloperDaoImpl {
     }
 
     public void delete(int id) {
-
+        try(Connection connection =DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            Statement statement = connection.createStatement()){
+            statement.executeUpdate(DELETE_BY_ID + id);
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-
 }

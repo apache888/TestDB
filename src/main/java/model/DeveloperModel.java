@@ -11,11 +11,28 @@ import java.util.List;
 public class DeveloperModel implements Model {
     private DeveloperDao developerDao = new DeveloperDao();
 
+    @Override
+    public void create() {
+        developerDao.create();
+    }
+
+    @Override
     public Developer getById(int id) {
         return developerDao.getById(id);
     }
 
+    @Override
     public List<Developer> getAll() {
         return developerDao.getAll();
+    }
+
+    @Override
+    public void update(int id) {
+        developerDao.update(id);
+    }
+
+    @Override
+    public void delete(int id) {
+        developerDao.delete(id);
     }
 }

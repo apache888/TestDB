@@ -4,9 +4,9 @@ import model.Model;
 import view.View;
 
 /**
- * Create by Roman Hayda on 28.03.2017.
+ * Create by Roman Hayda on 29.03.2017.
  */
-public class DeveloperController implements Controller {
+public class ProjectController implements Controller {
     private Model model;
     private View view;
 

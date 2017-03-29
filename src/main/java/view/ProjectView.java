@@ -2,15 +2,15 @@ package view;
 
 import controller.Controller;
 import model.entities.BaseObject;
-import model.entities.Skill;
+import model.entities.Project;
 
 import java.io.IOException;
 import java.util.List;
 
 /**
- * Create by Roman Hayda on 28.03.2017.
+ * Create by Roman Hayda on 29.03.2017.
  */
-public class SkillView implements View {
+public class ProjectView implements View {
     private Controller controller;
 
     @Override
@@ -71,11 +71,11 @@ public class SkillView implements View {
     }
 
     @Override
-    public void writeById(BaseObject skill) {
-        if (skill == null || (skill.getId() == 0 && skill.getName() == null)){
+    public void writeById(BaseObject proj) {
+        if (proj == null || (proj.getId() == 0 && proj.getName() == null)){
             ConsoleHelper.writeToConsole("\nThere is no such ID\n");
         }else {
-            ConsoleHelper.writeToConsole("\n" + skill.toString() + "\n");
+            ConsoleHelper.writeToConsole("\n" + proj.toString() + "\n");
         }
     }
 
@@ -84,10 +84,10 @@ public class SkillView implements View {
         if (list.isEmpty()) {
             ConsoleHelper.writeToConsole("\nThere are no records to view.\n");
         } else {
-            ConsoleHelper.writeToConsole("\nAll records of table 'skills'\n");
+            ConsoleHelper.writeToConsole("\nAll records of table 'projects'\n");
             for (BaseObject object : list) {
-                Skill skill = (Skill) object;
-                ConsoleHelper.writeToConsole(skill.toString());
+                Project proj = (Project) object;
+                ConsoleHelper.writeToConsole(proj.toString());
             }
             ConsoleHelper.writeToConsole("\n");
         }

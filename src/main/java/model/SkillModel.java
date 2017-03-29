@@ -11,11 +11,26 @@ import java.util.List;
 public class SkillModel implements Model {
     private SkillDao skillDao = new SkillDao();
 
+    @Override
+    public void create() {
+        skillDao.create();
+    }
+
     public Skill getById(int id) {
         return skillDao.getById(id);
     }
 
     public List<Skill> getAll() {
         return skillDao.getAll();
+    }
+
+    @Override
+    public void update(int id) {
+        skillDao.update(id);
+    }
+
+    @Override
+    public void delete(int id) {
+        skillDao.delete(id);
     }
 }

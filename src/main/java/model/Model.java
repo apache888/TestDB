@@ -12,4 +12,11 @@ public interface Model {
 
     List<? extends BaseObject> getAll();
 
+    void create();
+
+
+    void update(int id);
+
+
+    void delete(int id);
 }

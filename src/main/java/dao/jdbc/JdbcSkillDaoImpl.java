@@ -1,7 +1,9 @@
 package dao.jdbc;
 
 import model.entities.Skill;
+import view.ConsoleHelper;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +18,25 @@ public class JdbcSkillDaoImpl {
 
     private static final String SELECT_BY_ID = "SELECT * FROM skills WHERE id=";
     private static final String SELECT_ALL = "SELECT * FROM skills";
+    private static final String DELETE_BY_ID = "DELETE FROM skills WHERE id=";
+    private static final String INSERT = "INSERT INTO skills (specialty) VALUES (?)";
 
     public void create() {
-
+        try(Connection connection =DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            PreparedStatement prstmt = connection.prepareStatement(INSERT)){
+            while (true) {
+                try {
+                    ConsoleHelper.writeToConsole("Input new specialty:");
+                    prstmt.setString(1, ConsoleHelper.readString());
+                    break;
+                } catch (IOException e) {
+                    ConsoleHelper.writeToConsole("Wrong input. Try again.\n");
+                }
+            }
+            prstmt.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public Skill getById(int id) {
@@ -65,6 +83,11 @@ public class JdbcSkillDaoImpl {
     }
 
     public void delete(int id) {
-
+        try(Connection connection =DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            Statement statement = connection.createStatement()){
+            statement.executeUpdate(DELETE_BY_ID + id);
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

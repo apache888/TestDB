@@ -40,12 +40,16 @@ public class Developer extends BaseObject {
 
     @Override
     public String toString() {
-        return "Developer{" +
+        StringBuilder builder = new StringBuilder("Developer{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", experience=" + experience +
                 ", salary=" + salary +
-                ", skills=" + skills +
-                '}';
+                ", skills:\n");
+        for (Skill skill : skills) {
+            builder.append(skill.toString());
+            builder.append(",\n");
+        }
+        return builder.substring(0, builder.length() - 2) + '}';
     }
 }

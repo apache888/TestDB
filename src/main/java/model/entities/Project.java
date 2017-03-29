@@ -24,4 +24,25 @@ public class Project extends BaseObject{
     public Set<Developer> getProjectDevelopers() {
         return projectDevelopers;
     }
+
+    public void setProjectDevelopers(Set<Developer> projectDevelopers) {
+        this.projectDevelopers = projectDevelopers;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder("Project{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", cost=" + cost +
+                ", projectDevelopers=\n");
+        for (Developer dev : projectDevelopers) {
+            builder.append("Developer{id=");
+            builder.append(dev.getId());
+            builder.append(", name='");
+            builder.append(dev.getName());
+            builder.append("\',\n");
+        }
+        return builder.substring(0, builder.length() - 2) + '}';
+    }
 }
