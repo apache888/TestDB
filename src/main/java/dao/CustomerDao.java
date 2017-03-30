@@ -1,31 +1,21 @@
 package dao;
 
-import model.entities.Customer;
+import model.Customer;
 
 import java.util.List;
 
 /**
  * Create by Roman Hayda on 24.03.2017.
  */
-public class CustomerDao implements EntityDao<Customer> {
+public interface CustomerDao {
 
-    public void create() {
+    void create(Customer customer);
 
-    }
+    Customer getById(int id);
 
-    public Customer getById(int id) {
-        return null;
-    }
+    List<Customer> getAll();
 
-    public List<Customer> getAll() {
-        return null;
-    }
+    void update(Customer customer);
 
-    public void update(int id) {
-
-    }
-
-    public void delete(int id) {
-
-    }
+    void delete(int id);
 }

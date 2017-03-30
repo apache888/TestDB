@@ -1,8 +1,7 @@
 package view;
 
 import controller.Controller;
-import model.entities.BaseObject;
-import model.entities.Skill;
+import model.Skill;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.List;
  * Create by Roman Hayda on 28.03.2017.
  */
 public class SkillView implements View {
-    private Controller controller;
+    private Controller<Skill> controller;
 
     @Override
     public void setController(Controller controller) {
@@ -20,7 +19,8 @@ public class SkillView implements View {
 
     @Override
     public void fireEventCreate() {
-        controller.onCreate();
+        Skill skill = null;
+        controller.onCreate(skill);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class SkillView implements View {
             ConsoleHelper.writeToConsole("Input desired ID:");
             try {
                 int id = Integer.parseInt(ConsoleHelper.readString());
-                controller.onGetById(id);
+                writeById((Skill) controller.onGetById(id));
                 return;
             } catch (IOException e) {
                 ConsoleHelper.writeToConsole("Wrong ID. Try again.\n");
@@ -39,16 +39,17 @@ public class SkillView implements View {
 
     @Override
     public void fireEventGetAll() {
-        controller.onGetAll();
+        writeAll(controller.onGetAll());
     }
 
     @Override
     public void fireEventUpdate() {
+        Skill skill = null;
         while (true) {
             ConsoleHelper.writeToConsole("Input desired ID:");
             try {
                 int id = Integer.parseInt(ConsoleHelper.readString());
-                controller.onUpdate(id);
+                controller.onUpdate(skill);
                 return;
             } catch (IOException e) {
                 ConsoleHelper.writeToConsole("Wrong ID. Try again.\n");
@@ -70,8 +71,7 @@ public class SkillView implements View {
         }
     }
 
-    @Override
-    public void writeById(BaseObject skill) {
+    private void writeById(Skill skill) {
         if (skill == null || (skill.getId() == 0 && skill.getName() == null)){
             ConsoleHelper.writeToConsole("\nThere is no such ID\n");
         }else {
@@ -79,14 +79,12 @@ public class SkillView implements View {
         }
     }
 
-    @Override
-    public void writeAll(List<? extends BaseObject> list) {
+    private void writeAll(List<Skill> list) {
         if (list.isEmpty()) {
             ConsoleHelper.writeToConsole("\nThere are no records to view.\n");
         } else {
             ConsoleHelper.writeToConsole("\nAll records of table 'skills'\n");
-            for (BaseObject object : list) {
-                Skill skill = (Skill) object;
+            for (Skill skill : list) {
                 ConsoleHelper.writeToConsole(skill.toString());
             }
             ConsoleHelper.writeToConsole("\n");

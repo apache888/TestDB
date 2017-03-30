@@ -1,8 +1,7 @@
 package view;
 
 import controller.Controller;
-import model.entities.BaseObject;
-import model.entities.Project;
+import model.Project;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.List;
  * Create by Roman Hayda on 29.03.2017.
  */
 public class ProjectView implements View {
-    private Controller controller;
+    private Controller<Project> controller;
 
     @Override
     public void setController(Controller controller) {
@@ -20,7 +19,8 @@ public class ProjectView implements View {
 
     @Override
     public void fireEventCreate() {
-        controller.onCreate();
+        Project project = null;
+        controller.onCreate(project);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ProjectView implements View {
             ConsoleHelper.writeToConsole("Input desired ID:");
             try {
                 int id = Integer.parseInt(ConsoleHelper.readString());
-                controller.onGetById(id);
+                writeById(controller.onGetById(id));
                 return;
             } catch (IOException e) {
                 ConsoleHelper.writeToConsole("Wrong ID. Try again.\n");
@@ -39,16 +39,17 @@ public class ProjectView implements View {
 
     @Override
     public void fireEventGetAll() {
-        controller.onGetAll();
+        writeAll(controller.onGetAll());
     }
 
     @Override
     public void fireEventUpdate() {
+        Project project = null;
         while (true) {
             ConsoleHelper.writeToConsole("Input desired ID:");
             try {
                 int id = Integer.parseInt(ConsoleHelper.readString());
-                controller.onUpdate(id);
+                controller.onUpdate(project);
                 return;
             } catch (IOException e) {
                 ConsoleHelper.writeToConsole("Wrong ID. Try again.\n");
@@ -70,23 +71,20 @@ public class ProjectView implements View {
         }
     }
 
-    @Override
-    public void writeById(BaseObject proj) {
-        if (proj == null || (proj.getId() == 0 && proj.getName() == null)){
+    private void writeById(Project project) {
+        if (project == null || (project.getId() == 0 && project.getName() == null)){
             ConsoleHelper.writeToConsole("\nThere is no such ID\n");
         }else {
-            ConsoleHelper.writeToConsole("\n" + proj.toString() + "\n");
+            ConsoleHelper.writeToConsole("\n" + project.toString() + "\n");
         }
     }
 
-    @Override
-    public void writeAll(List<? extends BaseObject> list) {
+    private void writeAll(List<Project> list) {
         if (list.isEmpty()) {
             ConsoleHelper.writeToConsole("\nThere are no records to view.\n");
         } else {
             ConsoleHelper.writeToConsole("\nAll records of table 'projects'\n");
-            for (BaseObject object : list) {
-                Project proj = (Project) object;
+            for (Project proj : list) {
                 ConsoleHelper.writeToConsole(proj.toString());
             }
             ConsoleHelper.writeToConsole("\n");

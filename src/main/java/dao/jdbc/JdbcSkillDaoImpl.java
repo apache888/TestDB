@@ -1,9 +1,8 @@
 package dao.jdbc;
 
-import model.entities.Skill;
-import view.ConsoleHelper;
+import dao.SkillDao;
+import model.Skill;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.List;
 /**
  * Create by Roman Hayda on 27.03.2017.
  */
-public class JdbcSkillDaoImpl {
+public class JdbcSkillDaoImpl implements SkillDao {
     private static final String URL = "jdbc:mysql://localhost:3306/it_test_db?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
@@ -21,22 +20,22 @@ public class JdbcSkillDaoImpl {
     private static final String DELETE_BY_ID = "DELETE FROM skills WHERE id=";
     private static final String INSERT = "INSERT INTO skills (specialty) VALUES (?)";
 
-    public void create() {
-        try(Connection connection =DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            PreparedStatement prstmt = connection.prepareStatement(INSERT)){
-            while (true) {
-                try {
-                    ConsoleHelper.writeToConsole("Input new specialty:");
-                    prstmt.setString(1, ConsoleHelper.readString());
-                    break;
-                } catch (IOException e) {
-                    ConsoleHelper.writeToConsole("Wrong input. Try again.\n");
-                }
-            }
-            prstmt.executeUpdate();
-        }catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void create(Skill skill) {
+//        try(Connection connection =DriverManager.getConnection(URL, USERNAME, PASSWORD);
+//            PreparedStatement prstmt = connection.prepareStatement(INSERT)){
+//            while (true) {
+//                try {
+//                    ConsoleHelper.writeToConsole("Input new specialty:");
+//                    prstmt.setString(1, ConsoleHelper.readString());
+//                    break;
+//                } catch (IOException e) {
+//                    ConsoleHelper.writeToConsole("Wrong input. Try again.\n");
+//                }
+//            }
+//            prstmt.executeUpdate();
+//        }catch (SQLException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public Skill getById(int id) {
@@ -78,7 +77,7 @@ public class JdbcSkillDaoImpl {
         return list;
     }
 
-    public void update(int id) {
+    public void update(Skill skill) {
 
     }
 

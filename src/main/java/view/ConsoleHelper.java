@@ -1,7 +1,6 @@
 package view;
 
 import controller.*;
-import model.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,13 +13,12 @@ public class ConsoleHelper {
     private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private View view;
     private Controller controller;
-    private Model model;
 
     public void startApp() {
         showEntitiesMenu();
     }
 
-    public void showEntitiesMenu() {
+    private void showEntitiesMenu() {
         while (true) {
             try {
                 writeToConsole("Select enttity:\n\n" +
@@ -33,47 +31,32 @@ public class ConsoleHelper {
                 switch (Integer.parseInt(readString())) {
                     case 0:
                         view = new DeveloperView();
-                        model = new DeveloperModel();
                         controller = new DeveloperController();
                         view.setController(controller);
-                        controller.setView(view);
-                        controller.setModel(model);
                         showCommandsMenu();
                         break;
                     case 1:
                         view = new SkillView();
-                        model = new SkillModel();
                         controller = new SkillController();
                         view.setController(controller);
-                        controller.setView(view);
-                        controller.setModel(model);
                         showCommandsMenu();
                         break;
                     case 2:
                         view = new ProjectView();
-                        model = new ProjectModel();
                         controller = new ProjectController();
                         view.setController(controller);
-                        controller.setView(view);
-                        controller.setModel(model);
                         showCommandsMenu();
                         break;
                     case 3:
                         view = new CompanyView();
-                        model = new CompanyModel();
                         controller = new CompanyController();
                         view.setController(controller);
-                        controller.setView(view);
-                        controller.setModel(model);
                         showCommandsMenu();
                         break;
                     case 4:
                         view = new CustomerView();
-                        model = new CustomerModel();
                         controller = new CustomerController();
                         view.setController(controller);
-                        controller.setView(view);
-                        controller.setModel(model);
                         showCommandsMenu();
                         break;
                     case 5:

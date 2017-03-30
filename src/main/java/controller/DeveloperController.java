@@ -1,47 +1,39 @@
 package controller;
 
-import model.Model;
-import view.View;
+import dao.DeveloperDao;
+import dao.jdbc.JdbcDeveloperDaoImpl;
+import model.Developer;
+
+import java.util.List;
 
 /**
  * Create by Roman Hayda on 28.03.2017.
  */
-public class DeveloperController implements Controller {
-    private Model model;
-    private View view;
+public class DeveloperController implements Controller<Developer> {
+    private DeveloperDao developerDao = new JdbcDeveloperDaoImpl();
 
     @Override
-    public void setView(View view) {
-        this.view = view;
+    public void onCreate(Developer developer) {
+        developerDao.create(developer);
     }
 
     @Override
-    public void setModel(Model model) {
-        this.model = model;
+    public Developer onGetById(int id) {
+        return developerDao.getById(id);
     }
 
     @Override
-    public void onCreate() {
-        model.create();
+    public List<Developer> onGetAll() {
+        return developerDao.getAll();
     }
 
     @Override
-    public void onGetById(int id) {
-        view.writeById(model.getById(id));
-    }
-
-    @Override
-    public void onGetAll() {
-        view.writeAll(model.getAll());
-    }
-
-    @Override
-    public void onUpdate(int id) {
-        model.update(id);
+    public void onUpdate(Developer developer) {
+        developerDao.update(developer);
     }
 
     @Override
     public void onDelete(int id) {
-        model.delete(id);
+        developerDao.delete(id);
     }
 }

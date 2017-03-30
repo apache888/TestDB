@@ -1,47 +1,39 @@
 package controller;
 
-import model.Model;
-import view.View;
+import dao.ProjectDao;
+import dao.jdbc.JdbcProjectDaoImpl;
+import model.Project;
+
+import java.util.List;
 
 /**
  * Create by Roman Hayda on 29.03.2017.
  */
-public class ProjectController implements Controller {
-    private Model model;
-    private View view;
+public class ProjectController implements Controller<Project> {
+    private ProjectDao projectDao = new JdbcProjectDaoImpl();
 
     @Override
-    public void setView(View view) {
-        this.view = view;
+    public void onCreate(Project project) {
+        projectDao.create(project);
     }
 
     @Override
-    public void setModel(Model model) {
-        this.model = model;
+    public Project onGetById(int id) {
+        return projectDao.getById(id);
     }
 
     @Override
-    public void onCreate() {
-        model.create();
+    public List<Project> onGetAll() {
+        return projectDao.getAll();
     }
 
     @Override
-    public void onGetById(int id) {
-        view.writeById(model.getById(id));
-    }
-
-    @Override
-    public void onGetAll() {
-        view.writeAll(model.getAll());
-    }
-
-    @Override
-    public void onUpdate(int id) {
-        model.update(id);
+    public void onUpdate(Project project) {
+        projectDao.update(project);
     }
 
     @Override
     public void onDelete(int id) {
-        model.delete(id);
+        projectDao.delete(id);
     }
 }

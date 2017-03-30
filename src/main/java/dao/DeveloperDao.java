@@ -1,34 +1,22 @@
 package dao;
 
-import dao.jdbc.JdbcDeveloperDaoImpl;
-import model.entities.Developer;
+import model.Developer;
 
 import java.util.List;
 
 /**
  * Create by Roman Hayda on 24.03.2017.
  */
-public class DeveloperDao implements EntityDao<Developer> {
-    private JdbcDeveloperDaoImpl jdbcDeveloperDao = new JdbcDeveloperDaoImpl();
+public interface DeveloperDao {
 
-    public void create() {
-        jdbcDeveloperDao.create();
-    }
+    void create(Developer developer);
 
-    public Developer getById(int id) {
-        return jdbcDeveloperDao.getById(id);
-    }
+    Developer getById(int id);
 
-    public List<Developer> getAll() {
-        return jdbcDeveloperDao.getAll();
-    }
+    List<Developer> getAll();
 
-    public void update(int id) {
-        jdbcDeveloperDao.update(id);
-    }
+    void update(Developer developer);
 
-    public void delete(int id) {
-        jdbcDeveloperDao.delete(id);
-    }
+    void delete(int id);
 
 }

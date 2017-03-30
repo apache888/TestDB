@@ -1,43 +1,43 @@
 package controller;
 
-import model.Model;
-import view.View;
+import dao.SkillDao;
+import dao.jdbc.JdbcSkillDaoImpl;
+import model.Skill;
+
+import java.util.List;
 
 /**
  * Create by Roman Hayda on 28.03.2017.
  */
-public class SkillController implements Controller {
-    private Model skillModel;
-    private View skillView;
+public class SkillController implements Controller<Skill> {
+    private SkillDao skillDao = new JdbcSkillDaoImpl();
 
     @Override
-    public void onCreate() {
-        skillModel.create();
-    }
-
-    public void onGetById(int id) {
-       skillView.writeById(skillModel.getById(id));
-    }
-
-    public void onGetAll() {
-        skillView.writeAll(skillModel.getAll());
+    public void onCreate(Skill skill) {
+        skillDao.create(skill);
     }
 
     @Override
-    public void onUpdate(int id) {
-        skillModel.update(id);
+    public Skill onGetById(int id) {
+       return skillDao.getById(id);
+    }
+
+    @Override
+    public List<Skill> onGetAll() {
+        return skillDao.getAll();
+    }
+
+    @Override
+    public void onUpdate(Skill skill) {
+        skillDao.update(skill);
     }
 
     @Override
     public void onDelete(int id) {
-        skillModel.delete(id);
+        skillDao.delete(id);
     }
 
-    public void setModel(Model skillModel) {
-        this.skillModel = skillModel;
-    }
-
-    public void setView(View skillView) {
-        this.skillView = skillView;
-    }
+//    public void setDao(SkillDao skillDao) {
+//        this.skillDao = skillDao;
+//    }
 }

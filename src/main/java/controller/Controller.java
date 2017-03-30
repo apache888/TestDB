@@ -1,18 +1,19 @@
 package controller;
 
-import model.Model;
-import view.View;
+import java.util.List;
 
 /**
  * Create by Roman Hayda on 28.03.2017.
  */
-public interface Controller {
-    void setView(View view);
-    void setModel(Model model);
+public interface Controller<T> {
 
-    void onCreate();
-    void onGetById(int id);
-    void onGetAll();
-    void onUpdate(int id);
+    void onCreate(T obj);
+
+    T onGetById(int id);
+
+    List<T> onGetAll();
+
+    void onUpdate(T obj);
+
     void onDelete(int id);
 }

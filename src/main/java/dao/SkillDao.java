@@ -1,33 +1,21 @@
 package dao;
 
-import dao.jdbc.JdbcSkillDaoImpl;
-import model.entities.Skill;
+import model.Skill;
 
 import java.util.List;
 
 /**
  * Create by Roman Hayda on 24.03.2017.
  */
-public class SkillDao implements EntityDao<Skill> {
-    private JdbcSkillDaoImpl jdbcSkillDao = new JdbcSkillDaoImpl();
+public interface SkillDao{
 
-    public void create() {
-        jdbcSkillDao.create();
-    }
+    void create(Skill skill);
 
-    public Skill getById(int id) {
-        return jdbcSkillDao.getById(id);
-    }
+    Skill getById(int id);
 
-    public List<Skill> getAll() {
-        return jdbcSkillDao.getAll();
-    }
+    List<Skill> getAll();
 
-    public void update(int id) {
-        jdbcSkillDao.update(id);
-    }
+    void update(Skill skill);
 
-    public void delete(int id) {
-        jdbcSkillDao.delete(id);
-    }
+    void delete(int id);
 }

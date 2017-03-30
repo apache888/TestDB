@@ -1,30 +1,39 @@
 package controller;
 
-import model.Model;
-import view.View;
+import dao.CustomerDao;
+import dao.jdbc.JdbcCustomerDaoImpl;
+import model.Customer;
+
+import java.util.List;
 
 /**
  * Create by Roman Hayda on 29.03.2017.
  */
-public class CustomerController implements Controller {
+public class CustomerController implements Controller<Customer> {
+    private CustomerDao customerDao = new JdbcCustomerDaoImpl();
 
     @Override
-    public void setView(View view) {
-
+    public void onCreate(Customer customer) {
+        customerDao.create(customer);
     }
 
     @Override
-    public void setModel(Model model) {
-
+    public Customer onGetById(int id) {
+        return customerDao.getById(id);
     }
 
     @Override
-    public void onGetById() {
-
+    public List<Customer> onGetAll() {
+        return customerDao.getAll();
     }
 
     @Override
-    public void onGetAll() {
+    public void onUpdate(Customer customer) {
+        customerDao.update(customer);
+    }
 
+    @Override
+    public void onDelete(int id) {
+        customerDao.delete(id);
     }
 }

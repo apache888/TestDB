@@ -1,8 +1,7 @@
 package view;
 
 import controller.Controller;
-import model.entities.BaseObject;
-import model.entities.Developer;
+import model.Developer;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.List;
  * Create by Roman Hayda on 28.03.2017.
  */
 public class DeveloperView implements View {
-    private Controller controller;
+    private Controller<Developer> controller;
 
     @Override
     public void setController(Controller controller) {
@@ -20,7 +19,8 @@ public class DeveloperView implements View {
 
     @Override
     public void fireEventCreate() {
-        controller.onCreate();
+        Developer developer = null;
+        controller.onCreate(developer);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class DeveloperView implements View {
             ConsoleHelper.writeToConsole("Input desired ID:");
             try {
                 int id = Integer.parseInt(ConsoleHelper.readString());
-                controller.onGetById(id);
+                writeById(controller.onGetById(id));
                 return;
             } catch (IOException e) {
                 ConsoleHelper.writeToConsole("Wrong ID. Try again.\n");
@@ -39,16 +39,17 @@ public class DeveloperView implements View {
 
     @Override
     public void fireEventGetAll() {
-        controller.onGetAll();
+        writeAll(controller.onGetAll());
     }
 
     @Override
     public void fireEventUpdate() {
+        Developer developer = null;
         while (true) {
             ConsoleHelper.writeToConsole("Input desired ID:");
             try {
                 int id = Integer.parseInt(ConsoleHelper.readString());
-                controller.onUpdate(id);
+                controller.onUpdate(developer);
                 return;
             } catch (IOException e) {
                 ConsoleHelper.writeToConsole("Wrong ID. Try again.\n");
@@ -70,8 +71,7 @@ public class DeveloperView implements View {
         }
     }
 
-    @Override
-    public void writeById(BaseObject dev) {
+    private void writeById(Developer dev) {
         if (dev == null || (dev.getId() == 0 && dev.getName() == null)){
             ConsoleHelper.writeToConsole("\nThere is no such ID\n");
         }else {
@@ -79,14 +79,12 @@ public class DeveloperView implements View {
         }
     }
 
-    @Override
-    public void writeAll(List<? extends BaseObject> list) {
+    private void writeAll(List<Developer> list) {
         if (list.isEmpty()) {
             ConsoleHelper.writeToConsole("\nThere are no records to view.\n");
         } else {
             ConsoleHelper.writeToConsole("\nAll records of table 'developers'\n");
-            for (BaseObject object : list) {
-                Developer dev = (Developer) object;
+            for (Developer dev : list) {
                 ConsoleHelper.writeToConsole(dev.toString());
             }
             ConsoleHelper.writeToConsole("\n");

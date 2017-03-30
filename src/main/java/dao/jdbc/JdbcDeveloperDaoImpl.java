@@ -1,7 +1,8 @@
 package dao.jdbc;
 
-import model.entities.Developer;
-import model.entities.Skill;
+import dao.DeveloperDao;
+import model.Developer;
+import model.Skill;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.Set;
 /**
  * Create by Roman Hayda on 27.03.2017.
  */
-public class JdbcDeveloperDaoImpl {
+public class JdbcDeveloperDaoImpl implements DeveloperDao {
     private static final String URL = "jdbc:mysql://localhost:3306/it_test_db?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
@@ -23,7 +24,7 @@ public class JdbcDeveloperDaoImpl {
 
     private static final String SELECT_DEV_SKILLS_BY_ID = "SELECT skills.* FROM skills JOIN developers_skills on skill_id= skills.id and developer_id =";
 
-    public void create() {
+    public void create(Developer developer) {
 
     }
 
@@ -92,7 +93,7 @@ public class JdbcDeveloperDaoImpl {
         return list;
     }
 
-    public void update(int id) {
+    public void update(Developer developer) {
 
     }
 

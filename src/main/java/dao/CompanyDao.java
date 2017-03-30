@@ -1,31 +1,21 @@
 package dao;
 
-import model.entities.Company;
+import model.Company;
 
 import java.util.List;
 
 /**
  * Create by Roman Hayda on 24.03.2017.
  */
-public class CompanyDao implements EntityDao<Company> {
+public interface CompanyDao {
 
-    public void create() {
+    void create(Company company);
 
-    }
+    Company getById(int id);
 
-    public Company getById(int id) {
-        return null;
-    }
+    List<Company> getAll();
 
-    public List<Company> getAll() {
-        return null;
-    }
+    void update(Company company);
 
-    public void update(int id) {
-
-    }
-
-    public void delete(int id) {
-
-    }
+    void delete(int id);
 }

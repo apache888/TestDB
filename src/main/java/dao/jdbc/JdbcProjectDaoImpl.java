@@ -1,7 +1,8 @@
 package dao.jdbc;
 
-import model.entities.Developer;
-import model.entities.Project;
+import dao.ProjectDao;
+import model.Developer;
+import model.Project;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.Set;
 /**
  * Create by Roman Hayda on 29.03.2017.
  */
-public class JdbcProjectDaoImpl {
+public class JdbcProjectDaoImpl implements ProjectDao {
     private static final String URL = "jdbc:mysql://localhost:3306/it_test_db?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
@@ -23,7 +24,7 @@ public class JdbcProjectDaoImpl {
 
     private static final String SELECT_PROJECT_DEVS_BY_ID = "SELECT developers.* FROM developers JOIN projects_developers on developer_id= developers.id and project_id =";
 
-    public void create() {
+    public void create(Project project) {
 
     }
 
@@ -88,7 +89,7 @@ public class JdbcProjectDaoImpl {
         return list;
     }
 
-    public void update(int id) {
+    public void update(Project project) {
 
     }
 

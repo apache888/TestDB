@@ -1,4 +1,4 @@
-package model.entities;
+package model;
 
 import java.util.Set;
 
@@ -35,7 +35,7 @@ public class Project extends BaseObject{
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", cost=" + cost +
-                ", projectDevelopers=\n");
+                ", developers:\n");
         for (Developer dev : projectDevelopers) {
             builder.append("Developer{id=");
             builder.append(dev.getId());

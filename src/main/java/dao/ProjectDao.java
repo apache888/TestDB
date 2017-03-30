@@ -1,33 +1,21 @@
 package dao;
 
-import dao.jdbc.JdbcProjectDaoImpl;
-import model.entities.Project;
+import model.Project;
 
 import java.util.List;
 
 /**
  * Create by Roman Hayda on 24.03.2017.
  */
-public class ProjectDao implements EntityDao<Project> {
-    private JdbcProjectDaoImpl jdbcProjectDao = new JdbcProjectDaoImpl();
+public interface ProjectDao {
 
-    public void create() {
-        jdbcProjectDao.create();
-    }
+    void create(Project project);
 
-    public Project getById(int id) {
-        return null;
-    }
+    Project getById(int id);
 
-    public List<Project> getAll() {
-        return null;
-    }
+    List<Project> getAll();
 
-    public void update(int id) {
+    void update(Project project);
 
-    }
-
-    public void delete(int id) {
-
-    }
+    void delete(int id);
 }

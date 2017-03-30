@@ -1,30 +1,39 @@
 package controller;
 
-import model.Model;
-import view.View;
+import dao.CompanyDao;
+import dao.jdbc.JdbcCompanyDaoImpl;
+import model.Company;
+
+import java.util.List;
 
 /**
  * Create by Roman Hayda on 29.03.2017.
  */
-public class CompanyController implements Controller {
+public class CompanyController implements Controller<Company> {
+    private CompanyDao companyDao = new JdbcCompanyDaoImpl();
 
     @Override
-    public void setView(View view) {
-
+    public void onCreate(Company company) {
+        companyDao.create(company);
     }
 
     @Override
-    public void setModel(Model model) {
-
+    public Company onGetById(int id) {
+        return companyDao.getById(id);
     }
 
     @Override
-    public void onGetById() {
-
+    public List<Company> onGetAll() {
+        return companyDao.getAll();
     }
 
     @Override
-    public void onGetAll() {
+    public void onUpdate(Company company) {
+        companyDao.update(company);
+    }
 
+    @Override
+    public void onDelete(int id) {
+        companyDao.delete(id);
     }
 }
