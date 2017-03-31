@@ -2,6 +2,8 @@ package controller;
 
 import dao.DeveloperDao;
 import dao.jdbc.JdbcDeveloperDaoImpl;
+import exception.NotUniqueIdException;
+import exception.NotUniqueNameException;
 import model.Developer;
 
 import java.util.List;
@@ -13,7 +15,7 @@ public class DeveloperController implements Controller<Developer> {
     private DeveloperDao developerDao = new JdbcDeveloperDaoImpl();
 
     @Override
-    public void onCreate(Developer developer) {
+    public void onCreate(Developer developer) throws NotUniqueNameException, NotUniqueIdException {
         developerDao.create(developer);
     }
 
@@ -28,7 +30,7 @@ public class DeveloperController implements Controller<Developer> {
     }
 
     @Override
-    public void onUpdate(Developer developer) {
+    public void onUpdate(Developer developer) throws NotUniqueNameException, NotUniqueIdException {
         developerDao.update(developer);
     }
 

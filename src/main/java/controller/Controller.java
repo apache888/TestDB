@@ -1,5 +1,8 @@
 package controller;
 
+import exception.NotUniqueIdException;
+import exception.NotUniqueNameException;
+
 import java.util.List;
 
 /**
@@ -7,13 +10,13 @@ import java.util.List;
  */
 public interface Controller<T> {
 
-    void onCreate(T obj);
+    void onCreate(T obj) throws NotUniqueNameException, NotUniqueIdException;
 
     T onGetById(int id);
 
     List<T> onGetAll();
 
-    void onUpdate(T obj);
+    void onUpdate(T obj) throws NotUniqueNameException, NotUniqueIdException;
 
     void onDelete(int id);
 }

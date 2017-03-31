@@ -1,10 +1,16 @@
 package view;
 
 import controller.Controller;
+import controller.SkillController;
+import exception.NotUniqueIdException;
+import exception.NotUniqueNameException;
 import model.Developer;
+import model.Skill;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Create by Roman Hayda on 28.03.2017.
@@ -18,9 +24,9 @@ public class DeveloperView implements View {
     }
 
     @Override
-    public void fireEventCreate() {
-        Developer developer = null;
-        controller.onCreate(developer);
+    public void fireEventCreate() throws NotUniqueNameException, NotUniqueIdException {
+        ConsoleHelper.writeToConsole("Creating Developer object ...");
+        controller.onCreate(createDev());
     }
 
     @Override
@@ -43,18 +49,9 @@ public class DeveloperView implements View {
     }
 
     @Override
-    public void fireEventUpdate() {
-        Developer developer = null;
-        while (true) {
-            ConsoleHelper.writeToConsole("Input desired ID:");
-            try {
-                int id = Integer.parseInt(ConsoleHelper.readString());
-                controller.onUpdate(developer);
-                return;
-            } catch (IOException e) {
-                ConsoleHelper.writeToConsole("Wrong ID. Try again.\n");
-            }
-        }
+    public void fireEventUpdate() throws NotUniqueNameException, NotUniqueIdException {
+        ConsoleHelper.writeToConsole("Creating Developer object for update ...");
+         controller.onUpdate(createDev());
     }
 
     @Override
@@ -90,4 +87,81 @@ public class DeveloperView implements View {
             ConsoleHelper.writeToConsole("\n");
         }
     }
+
+    private Developer createDev() {
+        Developer developer;
+        int id;
+        String devName;
+        int exp;
+        int salary;
+        Set<Skill> set = new HashSet<>();
+
+        while (true) {
+            try {
+                ConsoleHelper.writeToConsole("Input id (if you want auto increment, input zero):");
+                id = Integer.parseInt(ConsoleHelper.readString());
+                break;
+            } catch (IOException | NumberFormatException e) {
+                ConsoleHelper.writeToConsole("Wrong integer. Try again");
+            }
+        }
+        while (true) {
+            try {
+                ConsoleHelper.writeToConsole("Input name of developer:");
+                devName = ConsoleHelper.readString();
+                break;
+            } catch (IOException e) {
+                ConsoleHelper.writeToConsole("Failed input. Try again");
+            }
+        }
+        while (true) {
+            try {
+                ConsoleHelper.writeToConsole("Input experience of developer:");
+                exp = Integer.parseInt(ConsoleHelper.readString());
+                break;
+            } catch (IOException | NumberFormatException e) {
+                ConsoleHelper.writeToConsole("Wrong integer. Try again");
+            }
+        }
+        while (true) {
+            try {
+                ConsoleHelper.writeToConsole("Input salary of developer:");
+                salary = Integer.parseInt(ConsoleHelper.readString());
+                break;
+            } catch (IOException | NumberFormatException e) {
+                ConsoleHelper.writeToConsole("Wrong integer. Try again");
+            }
+        }
+        while (true) {
+            try {
+                ConsoleHelper.writeToConsole("Input skill's IDs of developer: (for finish input 'exit')");
+                String str;
+                SkillController skillController = new SkillController();
+                while (!(str = ConsoleHelper.readString()).equalsIgnoreCase("exit")) {
+                    try {
+                        int idSkill = Integer.parseInt(str);
+                        set.add(skillController.onGetById(idSkill));
+                    } catch (NumberFormatException e) {
+                        ConsoleHelper.writeToConsole("Wrong integer. Try again");
+                    }
+                }
+                break;
+            } catch (IOException | NumberFormatException e) {
+                ConsoleHelper.writeToConsole("Wrong integer. Try again");
+            }
+        }
+
+        developer = new Developer(id, devName);
+        developer.setExperience(exp);
+        developer.setSalary(salary);
+        developer.setSkills(set);
+
+        return developer;
+    }
+
+//    private Developer updateDev() {
+//        Developer developer = null;
+//
+//        return developer;
+//    }
 }

@@ -1,6 +1,8 @@
 package view;
 
 import controller.Controller;
+import exception.NotUniqueIdException;
+import exception.NotUniqueNameException;
 import model.Project;
 
 import java.io.IOException;
@@ -18,7 +20,7 @@ public class ProjectView implements View {
     }
 
     @Override
-    public void fireEventCreate() {
+    public void fireEventCreate() throws NotUniqueNameException, NotUniqueIdException {
         Project project = null;
         controller.onCreate(project);
     }
@@ -43,7 +45,7 @@ public class ProjectView implements View {
     }
 
     @Override
-    public void fireEventUpdate() {
+    public void fireEventUpdate() throws NotUniqueNameException, NotUniqueIdException {
         Project project = null;
         while (true) {
             ConsoleHelper.writeToConsole("Input desired ID:");

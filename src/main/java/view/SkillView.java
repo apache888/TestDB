@@ -1,6 +1,8 @@
 package view;
 
 import controller.Controller;
+import exception.NotUniqueIdException;
+import exception.NotUniqueNameException;
 import model.Skill;
 
 import java.io.IOException;
@@ -18,9 +20,9 @@ public class SkillView implements View {
     }
 
     @Override
-    public void fireEventCreate() {
-        Skill skill = null;
-        controller.onCreate(skill);
+    public void fireEventCreate() throws NotUniqueNameException, NotUniqueIdException {
+        ConsoleHelper.writeToConsole("Creating Skill object ...");
+        controller.onCreate(createSkill());
     }
 
     @Override
@@ -43,18 +45,9 @@ public class SkillView implements View {
     }
 
     @Override
-    public void fireEventUpdate() {
-        Skill skill = null;
-        while (true) {
-            ConsoleHelper.writeToConsole("Input desired ID:");
-            try {
-                int id = Integer.parseInt(ConsoleHelper.readString());
-                controller.onUpdate(skill);
-                return;
-            } catch (IOException e) {
-                ConsoleHelper.writeToConsole("Wrong ID. Try again.\n");
-            }
-        }
+    public void fireEventUpdate() throws NotUniqueNameException, NotUniqueIdException {
+        ConsoleHelper.writeToConsole("Creating Skill object for update ...");
+       controller.onUpdate(createSkill());
     }
 
     @Override
@@ -90,4 +83,52 @@ public class SkillView implements View {
             ConsoleHelper.writeToConsole("\n");
         }
     }
+
+    private Skill createSkill() {
+        int id;
+        while (true) {
+            try {
+                ConsoleHelper.writeToConsole("Input id (if you want auto increment, input zero):");
+                id = Integer.parseInt(ConsoleHelper.readString());
+                break;
+            } catch (IOException | NumberFormatException e) {
+                ConsoleHelper.writeToConsole("Wrong integer. Try again");
+            }
+        }
+        String specialty;
+        while (true) {
+            try {
+                ConsoleHelper.writeToConsole("Input specialty:");
+                specialty = ConsoleHelper.readString();
+                break;
+            } catch (IOException e) {
+                ConsoleHelper.writeToConsole("Failed input. Try again");
+            }
+        }
+        return new Skill(id, specialty);
+    }
+
+//    private Skill updateSkill() {
+//        int id;
+//        while (true) {
+//            try {
+//                ConsoleHelper.writeToConsole("Input current or new id:");
+//                id = Integer.parseInt(ConsoleHelper.readString());
+//                break;
+//            } catch (IOException | NumberFormatException e) {
+//                ConsoleHelper.writeToConsole("Wrong integer. Try again");
+//            }
+//        }
+//        String specialty;
+//        while (true) {
+//            try {
+//                ConsoleHelper.writeToConsole("Input altered specialty:");
+//                specialty = ConsoleHelper.readString();
+//                break;
+//            } catch (IOException e) {
+//                ConsoleHelper.writeToConsole("Failed input. Try again");
+//            }
+//        }
+//        return new Skill(id, specialty);
+//    }
 }

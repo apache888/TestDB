@@ -62,6 +62,7 @@ public class JdbcProjectDaoImpl implements ProjectDao {
 
         try(Connection connection =DriverManager.getConnection(URL, USERNAME, PASSWORD);
             Statement statement = connection.createStatement();
+            Statement stmt = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SELECT_ALL)){
 
             while (resultSet.next()) {
@@ -71,7 +72,7 @@ public class JdbcProjectDaoImpl implements ProjectDao {
                 Project project = new Project(proj_id, name);
                 project.setCost(cost);
 
-                ResultSet rs = statement.executeQuery(SELECT_PROJECT_DEVS_BY_ID + proj_id);
+                ResultSet rs = stmt.executeQuery(SELECT_PROJECT_DEVS_BY_ID + proj_id);
                 Set<Developer> set = new HashSet<>();
                 while (rs.next()) {
                     int dev_id = rs.getInt("id");

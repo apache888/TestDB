@@ -41,8 +41,8 @@ public class Project extends BaseObject{
             builder.append(dev.getId());
             builder.append(", name='");
             builder.append(dev.getName());
-            builder.append("\',\n");
+            builder.append("\'},\n");
         }
-        return builder.substring(0, builder.length() - 2) + '}';
+        return builder.substring(0, builder.length() - 2) + "}\n";
     }
 }

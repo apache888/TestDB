@@ -31,8 +31,8 @@ public class Customer extends BaseObject {
             builder.append(project.getId());
             builder.append(", name='");
             builder.append(project.getName());
-            builder.append("\',\n");
+            builder.append("\'},\n");
         }
-        return builder.substring(0, builder.length() - 2) + '}';
+        return builder.substring(0, builder.length() - 2) + "}\n";
     }
 }

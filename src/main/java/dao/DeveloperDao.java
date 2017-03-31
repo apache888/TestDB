@@ -1,5 +1,7 @@
 package dao;
 
+import exception.NotUniqueIdException;
+import exception.NotUniqueNameException;
 import model.Developer;
 
 import java.util.List;
@@ -9,13 +11,13 @@ import java.util.List;
  */
 public interface DeveloperDao {
 
-    void create(Developer developer);
+    void create(Developer developer) throws NotUniqueIdException, NotUniqueNameException;
 
     Developer getById(int id);
 
     List<Developer> getAll();
 
-    void update(Developer developer);
+    void update(Developer developer) throws NotUniqueNameException, NotUniqueIdException;
 
     void delete(int id);
 

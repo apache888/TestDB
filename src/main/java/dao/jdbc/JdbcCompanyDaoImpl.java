@@ -19,7 +19,7 @@ public class JdbcCompanyDaoImpl implements CompanyDao {
     private static final String PASSWORD = "root";
 
     private static final String SELECT_BY_ID = "SELECT * FROM companies WHERE id=";
-    private static final String SELECT_ALL = "SELECT * FROM companies_projects";
+    private static final String SELECT_ALL = "SELECT * FROM companies";
     private static final String DELETE_BY_ID = "DELETE FROM companies WHERE id=";
 
     private static final String SELECT_COMPANY_PROJECTS_BY_ID = "SELECT projects.* FROM projects JOIN companies_projects on project_id= projects.id and company_id =";
@@ -60,6 +60,7 @@ public class JdbcCompanyDaoImpl implements CompanyDao {
 
         try(Connection connection =DriverManager.getConnection(URL, USERNAME, PASSWORD);
             Statement statement = connection.createStatement();
+            Statement stmt = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SELECT_ALL)){
 
             while (resultSet.next()) {
@@ -67,7 +68,7 @@ public class JdbcCompanyDaoImpl implements CompanyDao {
                 String name = resultSet.getString("name_company");
                 Company company = new Company(comp_id, name);
 
-                ResultSet rs = statement.executeQuery(SELECT_COMPANY_PROJECTS_BY_ID + comp_id);
+                ResultSet rs = stmt.executeQuery(SELECT_COMPANY_PROJECTS_BY_ID + comp_id);
                 Set<Project> set = new HashSet<>();
                 while (rs.next()) {
                     int proj_id = rs.getInt("id");

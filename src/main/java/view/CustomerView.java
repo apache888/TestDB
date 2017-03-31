@@ -1,6 +1,8 @@
 package view;
 
 import controller.Controller;
+import exception.NotUniqueIdException;
+import exception.NotUniqueNameException;
 import model.Customer;
 
 import java.io.IOException;
@@ -18,7 +20,7 @@ public class CustomerView implements View {
     }
 
     @Override
-    public void fireEventCreate() {
+    public void fireEventCreate() throws NotUniqueNameException, NotUniqueIdException {
         Customer customer = null;
         controller.onCreate(customer);
     }
@@ -43,7 +45,7 @@ public class CustomerView implements View {
     }
 
     @Override
-    public void fireEventUpdate() {
+    public void fireEventUpdate() throws NotUniqueNameException, NotUniqueIdException {
         Customer customer = null;
         while (true) {
             ConsoleHelper.writeToConsole("Input desired ID:");
@@ -83,7 +85,7 @@ public class CustomerView implements View {
         if (list.isEmpty()) {
             ConsoleHelper.writeToConsole("\nThere are no records to view.\n");
         } else {
-            ConsoleHelper.writeToConsole("\nAll records of table 'projects'\n");
+            ConsoleHelper.writeToConsole("\nAll records of table 'customers'\n");
             for (Customer customer : list) {
                 ConsoleHelper.writeToConsole(customer.toString());
             }

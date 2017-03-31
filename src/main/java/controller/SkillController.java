@@ -2,6 +2,8 @@ package controller;
 
 import dao.SkillDao;
 import dao.jdbc.JdbcSkillDaoImpl;
+import exception.NotUniqueIdException;
+import exception.NotUniqueNameException;
 import model.Skill;
 
 import java.util.List;
@@ -13,7 +15,7 @@ public class SkillController implements Controller<Skill> {
     private SkillDao skillDao = new JdbcSkillDaoImpl();
 
     @Override
-    public void onCreate(Skill skill) {
+    public void onCreate(Skill skill) throws NotUniqueNameException, NotUniqueIdException {
         skillDao.create(skill);
     }
 
@@ -28,7 +30,7 @@ public class SkillController implements Controller<Skill> {
     }
 
     @Override
-    public void onUpdate(Skill skill) {
+    public void onUpdate(Skill skill) throws NotUniqueNameException, NotUniqueIdException {
         skillDao.update(skill);
     }
 
@@ -36,8 +38,4 @@ public class SkillController implements Controller<Skill> {
     public void onDelete(int id) {
         skillDao.delete(id);
     }
-
-//    public void setDao(SkillDao skillDao) {
-//        this.skillDao = skillDao;
-//    }
 }

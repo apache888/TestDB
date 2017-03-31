@@ -1,6 +1,8 @@
 package dao.jdbc;
 
 import dao.SkillDao;
+import exception.NotUniqueIdException;
+import exception.NotUniqueNameException;
 import model.Skill;
 
 import java.sql.*;
@@ -17,25 +19,41 @@ public class JdbcSkillDaoImpl implements SkillDao {
 
     private static final String SELECT_BY_ID = "SELECT * FROM skills WHERE id=";
     private static final String SELECT_ALL = "SELECT * FROM skills";
+    private static final String SELECT_BY_NAME = "SELECT * FROM skills WHERE specialty=?";
     private static final String DELETE_BY_ID = "DELETE FROM skills WHERE id=";
-    private static final String INSERT = "INSERT INTO skills (specialty) VALUES (?)";
+    private static final String INSERT = "INSERT INTO skills VALUES (?, ?)";
+    private static final String INSERT_AUTO_ID = "INSERT INTO skills (specialty) VALUES (?)";
+    private static final String UPDATE_BY_ID = "UPDATE skills SET specialty = ? WHERE id=?";
 
-    public void create(Skill skill) {
-//        try(Connection connection =DriverManager.getConnection(URL, USERNAME, PASSWORD);
-//            PreparedStatement prstmt = connection.prepareStatement(INSERT)){
-//            while (true) {
-//                try {
-//                    ConsoleHelper.writeToConsole("Input new specialty:");
-//                    prstmt.setString(1, ConsoleHelper.readString());
-//                    break;
-//                } catch (IOException e) {
-//                    ConsoleHelper.writeToConsole("Wrong input. Try again.\n");
-//                }
-//            }
-//            prstmt.executeUpdate();
-//        }catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+    public void create(Skill skill) throws NotUniqueIdException, NotUniqueNameException {
+        PreparedStatement prstmt = null;
+        try(Connection connection =DriverManager.getConnection(URL, USERNAME, PASSWORD)){
+
+            if (skill.getId() == 0 && !existWithName(connection, skill.getName())) {
+                prstmt = connection.prepareStatement(INSERT_AUTO_ID);
+                prstmt.setString(1, skill.getName());
+                prstmt.executeUpdate();
+            } else if (existWithId(connection, skill.getId())) {
+                throw new NotUniqueIdException("ID " + skill.getId() + " not unique.");
+            } else if (existWithName(connection, skill.getName())) {
+                throw new NotUniqueNameException("Specialty \'" + skill.getName() + "\' not unique");
+            } else {
+                prstmt = connection.prepareStatement(INSERT);
+                prstmt.setInt(1, skill.getId());
+                prstmt.setString(2, skill.getName());
+                prstmt.executeUpdate();
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if (prstmt != null) {
+                try {
+                    prstmt.close();
+                } catch (SQLException e) {
+                    //NOP
+                }
+            }
+        }
     }
 
     public Skill getById(int id) {
@@ -45,7 +63,7 @@ public class JdbcSkillDaoImpl implements SkillDao {
             ResultSet resultSet = statement.executeQuery(SELECT_BY_ID + id)){
 
             while (resultSet.next()) {
-                int skill_id = resultSet.getInt("id");
+                int skill_id = resultSet.getInt("id");   //такое имя переменной для читаемости
                 String name = resultSet.getString("specialty");
                 skill = new Skill(skill_id, name);
             }
@@ -77,8 +95,26 @@ public class JdbcSkillDaoImpl implements SkillDao {
         return list;
     }
 
-    public void update(Skill skill) {
+    public void update(Skill skill) throws NotUniqueNameException, NotUniqueIdException {
+        try(Connection connection =DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            Statement statement = connection.createStatement();
+            PreparedStatement prstmt = connection.prepareStatement(UPDATE_BY_ID);
+            ResultSet rs = statement.executeQuery(SELECT_ALL)){
 
+            List<Integer> idList = new ArrayList<>();
+            while (rs.next()) {
+                idList.add(rs.getInt("id"));
+            }
+            if (!idList.contains(skill.getId())) {
+                create(skill);
+            } else {
+                    prstmt.setString(1, skill.getName());
+                    prstmt.setInt(2, skill.getId());
+                    prstmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void delete(int id) {
@@ -89,4 +125,18 @@ public class JdbcSkillDaoImpl implements SkillDao {
             e.printStackTrace();
         }
     }
+
+    private boolean existWithId(Connection connection, int id) throws SQLException {
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery(SELECT_BY_ID + id);
+        return rs.next();
+    }
+
+    private boolean existWithName(Connection connection, String name) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(SELECT_BY_NAME);
+        statement.setString(1, name);
+        ResultSet rs = statement.executeQuery();
+        return rs.next();
+    }
+
 }

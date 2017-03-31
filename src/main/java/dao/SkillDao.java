@@ -1,5 +1,7 @@
 package dao;
 
+import exception.NotUniqueIdException;
+import exception.NotUniqueNameException;
 import model.Skill;
 
 import java.util.List;
@@ -9,13 +11,13 @@ import java.util.List;
  */
 public interface SkillDao{
 
-    void create(Skill skill);
+    void create(Skill skill) throws NotUniqueIdException, NotUniqueNameException;
 
     Skill getById(int id);
 
     List<Skill> getAll();
 
-    void update(Skill skill);
+    void update(Skill skill) throws NotUniqueNameException, NotUniqueIdException;
 
     void delete(int id);
 }

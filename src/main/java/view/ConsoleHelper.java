@@ -1,6 +1,8 @@
 package view;
 
 import controller.*;
+import exception.NotUniqueIdException;
+import exception.NotUniqueNameException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,7 +23,7 @@ public class ConsoleHelper {
     private void showEntitiesMenu() {
         while (true) {
             try {
-                writeToConsole("Select enttity:\n\n" +
+                writeToConsole("\nSelect entity:\n\n" +
                         "0 - Developer\n" +
                         "1 - Skill\n" +
                         "2 - Project\n" +
@@ -75,7 +77,7 @@ public class ConsoleHelper {
     private void showCommandsMenu() {
         while (true) {
             try {
-                writeToConsole("Select command:\n\n" +
+                writeToConsole("\nSelect command:\n\n" +
                         "0 - Create\n" +
                         "1 - Select all\n" +
                         "2 - Select by id\n" +
@@ -85,6 +87,7 @@ public class ConsoleHelper {
                 switch (Integer.parseInt(readString())) {
                     case 0:
                         view.fireEventCreate();
+                        ConsoleHelper.writeToConsole("Command executed successfully.");
                         break;
                     case 1:
                         view.fireEventGetAll();
@@ -94,17 +97,19 @@ public class ConsoleHelper {
                         break;
                     case 3:
                         view.fireEventUpdate();
+                        ConsoleHelper.writeToConsole("Command executed successfully.");
                         break;
                     case 4:
                         view.fireEventDelete();
+                        ConsoleHelper.writeToConsole("Command executed successfully.");
                         break;
                     case 5:
                         return;
                     default:
                         throw new IllegalArgumentException();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException | NotUniqueNameException | NotUniqueIdException e) {
+                writeToConsole(e.getMessage());
             } catch (IllegalArgumentException e) {
                 writeToConsole("Wrong command. Try again.");
             }
@@ -118,4 +123,6 @@ public class ConsoleHelper {
     public static void writeToConsole(String message) {
         System.out.println(message);
     }
+
+
 }

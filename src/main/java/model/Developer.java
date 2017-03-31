@@ -50,6 +50,6 @@ public class Developer extends BaseObject {
             builder.append(skill.toString());
             builder.append(",\n");
         }
-        return builder.substring(0, builder.length() - 2) + '}';
+        return builder.substring(0, builder.length() - 2) + "}\n";
     }
 }

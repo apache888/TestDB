@@ -18,9 +18,9 @@ public class JdbcCustomerDaoImpl implements CustomerDao {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
 
-    private static final String SELECT_BY_ID = "SELECT * FROM companies WHERE id=";
-    private static final String SELECT_ALL = "SELECT * FROM companies_projects";
-    private static final String DELETE_BY_ID = "DELETE FROM companies WHERE id=";
+    private static final String SELECT_BY_ID = "SELECT * FROM customers WHERE id=";
+    private static final String SELECT_ALL = "SELECT * FROM customers";
+    private static final String DELETE_BY_ID = "DELETE FROM customers WHERE id=";
 
     private static final String SELECT_CUSTOMER_PROJECTS_BY_ID = "SELECT projects.* FROM projects JOIN customers_projects on project_id= projects.id and customer_id =";
 
@@ -60,6 +60,7 @@ public class JdbcCustomerDaoImpl implements CustomerDao {
 
         try(Connection connection =DriverManager.getConnection(URL, USERNAME, PASSWORD);
             Statement statement = connection.createStatement();
+            Statement stmt = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SELECT_ALL)){
 
             while (resultSet.next()) {
@@ -67,7 +68,7 @@ public class JdbcCustomerDaoImpl implements CustomerDao {
                 String name = resultSet.getString("name_customer");
                 Customer customer = new Customer(cust_id, name);
 
-                ResultSet rs = statement.executeQuery(SELECT_CUSTOMER_PROJECTS_BY_ID + cust_id);
+                ResultSet rs = stmt.executeQuery(SELECT_CUSTOMER_PROJECTS_BY_ID + cust_id);
                 Set<Project> set = new HashSet<>();
                 while (rs.next()) {
                     int proj_id = rs.getInt("id");
