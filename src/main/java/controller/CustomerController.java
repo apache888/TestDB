@@ -2,6 +2,9 @@ package controller;
 
 import dao.CustomerDao;
 import dao.jdbc.JdbcCustomerDaoImpl;
+import exception.NoSuchIdException;
+import exception.NotUniqueIdException;
+import exception.NotUniqueNameException;
 import model.Customer;
 
 import java.util.List;
@@ -13,12 +16,12 @@ public class CustomerController implements Controller<Customer> {
     private CustomerDao customerDao = new JdbcCustomerDaoImpl();
 
     @Override
-    public void onCreate(Customer customer) {
+    public void onCreate(Customer customer) throws NotUniqueNameException, NotUniqueIdException {
         customerDao.create(customer);
     }
 
     @Override
-    public Customer onGetById(int id) {
+    public Customer onGetById(int id) throws NoSuchIdException {
         return customerDao.getById(id);
     }
 
@@ -28,7 +31,7 @@ public class CustomerController implements Controller<Customer> {
     }
 
     @Override
-    public void onUpdate(Customer customer) {
+    public void onUpdate(Customer customer) throws NotUniqueNameException, NotUniqueIdException {
         customerDao.update(customer);
     }
 

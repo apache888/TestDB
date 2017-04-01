@@ -1,5 +1,6 @@
 package dao;
 
+import exception.NoSuchIdException;
 import exception.NotUniqueIdException;
 import exception.NotUniqueNameException;
 import model.Developer;
@@ -13,7 +14,7 @@ public interface DeveloperDao {
 
     void create(Developer developer) throws NotUniqueIdException, NotUniqueNameException;
 
-    Developer getById(int id);
+    Developer getById(int id) throws NoSuchIdException;
 
     List<Developer> getAll();
 

@@ -1,5 +1,6 @@
 package controller;
 
+import exception.NoSuchIdException;
 import exception.NotUniqueIdException;
 import exception.NotUniqueNameException;
 
@@ -12,7 +13,7 @@ public interface Controller<T> {
 
     void onCreate(T obj) throws NotUniqueNameException, NotUniqueIdException;
 
-    T onGetById(int id);
+    T onGetById(int id) throws NoSuchIdException;
 
     List<T> onGetAll();
 

@@ -1,5 +1,8 @@
 package dao;
 
+import exception.NoSuchIdException;
+import exception.NotUniqueIdException;
+import exception.NotUniqueNameException;
 import model.Project;
 
 import java.util.List;
@@ -9,13 +12,13 @@ import java.util.List;
  */
 public interface ProjectDao {
 
-    void create(Project project);
+    void create(Project project) throws NotUniqueIdException, NotUniqueNameException;
 
-    Project getById(int id);
+    Project getById(int id) throws NoSuchIdException;
 
     List<Project> getAll();
 
-    void update(Project project);
+    void update(Project project) throws NotUniqueNameException, NotUniqueIdException;
 
     void delete(int id);
 }

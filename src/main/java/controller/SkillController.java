@@ -2,6 +2,7 @@ package controller;
 
 import dao.SkillDao;
 import dao.jdbc.JdbcSkillDaoImpl;
+import exception.NoSuchIdException;
 import exception.NotUniqueIdException;
 import exception.NotUniqueNameException;
 import model.Skill;
@@ -20,7 +21,7 @@ public class SkillController implements Controller<Skill> {
     }
 
     @Override
-    public Skill onGetById(int id) {
+    public Skill onGetById(int id) throws NoSuchIdException {
        return skillDao.getById(id);
     }
 

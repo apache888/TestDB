@@ -1,6 +1,7 @@
 package dao.jdbc;
 
 import dao.DeveloperDao;
+import exception.NoSuchIdException;
 import exception.NotUniqueIdException;
 import exception.NotUniqueNameException;
 import model.Developer;
@@ -61,7 +62,7 @@ public class JdbcDeveloperDaoImpl implements DeveloperDao {
         }
     }
 
-    public Developer getById(int id) {
+    public Developer getById(int id) throws NoSuchIdException {
         Developer developer = null;
         try(Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             Statement statement = connection.createStatement();
@@ -84,12 +85,18 @@ public class JdbcDeveloperDaoImpl implements DeveloperDao {
                 set.add(new Skill(skill_id, name));
             }
             rs.close();
-            developer.setSkills(set);
-            return developer;
+            if (developer != null) {
+                developer.setSkills(set);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return developer;
+        if (developer != null) {
+            return developer;
+        } else {
+            throw new NoSuchIdException("There is no record in \"developers\" with ID " + id + "\n");
+        }
+
     }
 
     public List<Developer> getAll() {
@@ -157,6 +164,7 @@ public class JdbcDeveloperDaoImpl implements DeveloperDao {
                     if (!idSkills.contains(skill.getId())) {
                         ps.setInt(1, developer.getId());
                         ps.setInt(2, skill.getId());
+                        ps.executeUpdate();
                     }
                 }
             }
@@ -207,9 +215,8 @@ public class JdbcDeveloperDaoImpl implements DeveloperDao {
         for (Skill skill : developer.getSkills()) {
             statement.setInt(1, developer.getId());
             statement.setInt(2, skill.getId());
-            statement.addBatch();
+            statement.executeUpdate();
         }
-        statement.executeBatch();
         statement.close();
     }
 }

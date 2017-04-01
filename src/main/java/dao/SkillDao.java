@@ -1,5 +1,6 @@
 package dao;
 
+import exception.NoSuchIdException;
 import exception.NotUniqueIdException;
 import exception.NotUniqueNameException;
 import model.Skill;
@@ -13,7 +14,7 @@ public interface SkillDao{
 
     void create(Skill skill) throws NotUniqueIdException, NotUniqueNameException;
 
-    Skill getById(int id);
+    Skill getById(int id) throws NoSuchIdException;
 
     List<Skill> getAll();
 

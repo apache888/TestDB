@@ -1,5 +1,8 @@
 package dao;
 
+import exception.NoSuchIdException;
+import exception.NotUniqueIdException;
+import exception.NotUniqueNameException;
 import model.Customer;
 
 import java.util.List;
@@ -9,13 +12,13 @@ import java.util.List;
  */
 public interface CustomerDao {
 
-    void create(Customer customer);
+    void create(Customer customer) throws NotUniqueIdException, NotUniqueNameException;
 
-    Customer getById(int id);
+    Customer getById(int id) throws NoSuchIdException;
 
     List<Customer> getAll();
 
-    void update(Customer customer);
+    void update(Customer customer) throws NotUniqueNameException, NotUniqueIdException;
 
     void delete(int id);
 }

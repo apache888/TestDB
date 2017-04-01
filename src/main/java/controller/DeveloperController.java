@@ -2,6 +2,7 @@ package controller;
 
 import dao.DeveloperDao;
 import dao.jdbc.JdbcDeveloperDaoImpl;
+import exception.NoSuchIdException;
 import exception.NotUniqueIdException;
 import exception.NotUniqueNameException;
 import model.Developer;
@@ -20,7 +21,7 @@ public class DeveloperController implements Controller<Developer> {
     }
 
     @Override
-    public Developer onGetById(int id) {
+    public Developer onGetById(int id) throws NoSuchIdException {
         return developerDao.getById(id);
     }
 

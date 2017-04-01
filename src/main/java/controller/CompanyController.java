@@ -2,6 +2,9 @@ package controller;
 
 import dao.CompanyDao;
 import dao.jdbc.JdbcCompanyDaoImpl;
+import exception.NoSuchIdException;
+import exception.NotUniqueIdException;
+import exception.NotUniqueNameException;
 import model.Company;
 
 import java.util.List;
@@ -13,12 +16,12 @@ public class CompanyController implements Controller<Company> {
     private CompanyDao companyDao = new JdbcCompanyDaoImpl();
 
     @Override
-    public void onCreate(Company company) {
+    public void onCreate(Company company) throws NotUniqueNameException, NotUniqueIdException {
         companyDao.create(company);
     }
 
     @Override
-    public Company onGetById(int id) {
+    public Company onGetById(int id) throws NoSuchIdException {
         return companyDao.getById(id);
     }
 
@@ -28,7 +31,7 @@ public class CompanyController implements Controller<Company> {
     }
 
     @Override
-    public void onUpdate(Company company) {
+    public void onUpdate(Company company) throws NotUniqueNameException, NotUniqueIdException {
         companyDao.update(company);
     }
 

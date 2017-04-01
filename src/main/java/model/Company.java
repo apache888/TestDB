@@ -1,22 +1,22 @@
 package model;
 
-import java.util.Set;
+import java.util.Map;
 
 /**
  * Create by Roman Hayda on 24.03.2017.
  */
 public class Company extends BaseObject {
-    private Set<Project> companyProjects;
+    private Map<Project, Integer> companyProjects;
 
     public Company(int id, String name) {
         super(id, name);
     }
 
-    public Set<Project> getCompanyProjects() {
+    public Map<Project, Integer> getCompanyProjects() {
         return companyProjects;
     }
 
-    public void setCompanyProjects(Set<Project> companyProjects) {
+    public void setCompanyProjects(Map<Project, Integer> companyProjects) {
         this.companyProjects = companyProjects;
     }
 
@@ -26,7 +26,7 @@ public class Company extends BaseObject {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", projects:\n");
-        for (Project project : companyProjects) {
+        for (Project project : companyProjects.keySet()) {
             builder.append("Project{id=");
             builder.append(project.getId());
             builder.append(", name='");

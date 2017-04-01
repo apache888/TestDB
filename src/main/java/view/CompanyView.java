@@ -1,12 +1,15 @@
 package view;
 
 import controller.Controller;
+import controller.ProjectController;
+import exception.NoSuchIdException;
 import exception.NotUniqueIdException;
 import exception.NotUniqueNameException;
 import model.Company;
+import model.Project;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 
 /**
  * Create by Roman Hayda on 29.03.2017.
@@ -21,8 +24,8 @@ public class CompanyView implements View {
 
     @Override
     public void fireEventCreate() throws NotUniqueNameException, NotUniqueIdException {
-        Company company = null;
-        controller.onCreate(company);
+        ConsoleHelper.writeToConsole("Creating Company object ...");
+        controller.onCreate(createCompany());
     }
 
     @Override
@@ -35,6 +38,8 @@ public class CompanyView implements View {
                 return;
             } catch (IOException e) {
                 ConsoleHelper.writeToConsole("Wrong ID. Try again.\n");
+            } catch (NoSuchIdException e) {
+                ConsoleHelper.writeToConsole(e.getMessage());
             }
         }
     }
@@ -46,17 +51,8 @@ public class CompanyView implements View {
 
     @Override
     public void fireEventUpdate() throws NotUniqueNameException, NotUniqueIdException {
-        Company company = null;
-        while (true) {
-            ConsoleHelper.writeToConsole("Input desired ID:");
-            try {
-                int id = Integer.parseInt(ConsoleHelper.readString());
-                controller.onUpdate(company);
-                return;
-            } catch (IOException e) {
-                ConsoleHelper.writeToConsole("Wrong ID. Try again.\n");
-            }
-        }
+        ConsoleHelper.writeToConsole("Creating Company object for update...");
+         controller.onUpdate(createCompany());
     }
 
     @Override
@@ -91,5 +87,57 @@ public class CompanyView implements View {
             }
             ConsoleHelper.writeToConsole("\n");
         }
+    }
+
+    private Company createCompany() {
+        Company company;
+        int id;
+        String companyName;
+        Map<Project, Integer> projects = new HashMap<>();
+
+        while (true) {
+            try {
+                ConsoleHelper.writeToConsole("Input id (if you want auto increment, input zero):");
+                id = Integer.parseInt(ConsoleHelper.readString());
+                break;
+            } catch (IOException | NumberFormatException e) {
+                ConsoleHelper.writeToConsole("Wrong integer. Try again");
+            }
+        }
+        while (true) {
+            try {
+                ConsoleHelper.writeToConsole("Input company name:");
+                companyName = ConsoleHelper.readString();
+                break;
+            } catch (IOException e) {
+                ConsoleHelper.writeToConsole("Failed input. Try again");
+            }
+        }
+        while (true) {
+            try {
+                ConsoleHelper.writeToConsole("Input project's IDs and ownership level of company: (for finish input 'exit')");
+                String str;
+                ProjectController projectController = new ProjectController();
+                while (!(str = ConsoleHelper.readString()).equalsIgnoreCase("exit")) {
+                    try {
+                        int idProject = Integer.parseInt(str);
+                        ConsoleHelper.writeToConsole("share:");
+                        int shareProject = Integer.parseInt(ConsoleHelper.readString());
+                        projects.put(projectController.onGetById(idProject), shareProject);
+                    } catch (NumberFormatException e) {
+                        ConsoleHelper.writeToConsole("Wrong integer. Try again");
+                    } catch (NoSuchIdException e) {
+                        ConsoleHelper.writeToConsole(e.getMessage());
+                    }
+                }
+                break;
+            } catch (IOException | NumberFormatException e) {
+                ConsoleHelper.writeToConsole("Wrong integer. Try again");
+            }
+        }
+        company = new Company(id, companyName);
+        company.setCompanyProjects(projects);
+
+        return company;
     }
 }

@@ -1,6 +1,7 @@
 package dao.jdbc;
 
 import dao.SkillDao;
+import exception.NoSuchIdException;
 import exception.NotUniqueIdException;
 import exception.NotUniqueNameException;
 import model.Skill;
@@ -56,7 +57,7 @@ public class JdbcSkillDaoImpl implements SkillDao {
         }
     }
 
-    public Skill getById(int id) {
+    public Skill getById(int id) throws NoSuchIdException {
         Skill skill = null;
         try(Connection connection =DriverManager.getConnection(URL, USERNAME, PASSWORD);
             Statement statement = connection.createStatement();
@@ -67,11 +68,14 @@ public class JdbcSkillDaoImpl implements SkillDao {
                 String name = resultSet.getString("specialty");
                 skill = new Skill(skill_id, name);
             }
-            return skill;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return skill;
+        if (skill != null) {
+            return skill;
+        } else {
+            throw new NoSuchIdException("There is no record in \"skills\" with ID " + id + "\n");
+        }
     }
 
     public List<Skill> getAll() {

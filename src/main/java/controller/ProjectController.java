@@ -2,6 +2,9 @@ package controller;
 
 import dao.ProjectDao;
 import dao.jdbc.JdbcProjectDaoImpl;
+import exception.NoSuchIdException;
+import exception.NotUniqueIdException;
+import exception.NotUniqueNameException;
 import model.Project;
 
 import java.util.List;
@@ -13,12 +16,12 @@ public class ProjectController implements Controller<Project> {
     private ProjectDao projectDao = new JdbcProjectDaoImpl();
 
     @Override
-    public void onCreate(Project project) {
+    public void onCreate(Project project) throws NotUniqueNameException, NotUniqueIdException {
         projectDao.create(project);
     }
 
     @Override
-    public Project onGetById(int id) {
+    public Project onGetById(int id) throws NoSuchIdException {
         return projectDao.getById(id);
     }
 
@@ -28,7 +31,7 @@ public class ProjectController implements Controller<Project> {
     }
 
     @Override
-    public void onUpdate(Project project) {
+    public void onUpdate(Project project) throws NotUniqueNameException, NotUniqueIdException {
         projectDao.update(project);
     }
 

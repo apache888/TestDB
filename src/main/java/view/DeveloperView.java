@@ -2,6 +2,7 @@ package view;
 
 import controller.Controller;
 import controller.SkillController;
+import exception.NoSuchIdException;
 import exception.NotUniqueIdException;
 import exception.NotUniqueNameException;
 import model.Developer;
@@ -39,6 +40,8 @@ public class DeveloperView implements View {
                 return;
             } catch (IOException e) {
                 ConsoleHelper.writeToConsole("Wrong ID. Try again.\n");
+            } catch (NoSuchIdException e) {
+                ConsoleHelper.writeToConsole(e.getMessage());
             }
         }
     }
@@ -143,6 +146,8 @@ public class DeveloperView implements View {
                         set.add(skillController.onGetById(idSkill));
                     } catch (NumberFormatException e) {
                         ConsoleHelper.writeToConsole("Wrong integer. Try again");
+                    } catch (NoSuchIdException e) {
+                        ConsoleHelper.writeToConsole(e.getMessage());
                     }
                 }
                 break;

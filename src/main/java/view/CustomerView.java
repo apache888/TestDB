@@ -1,6 +1,7 @@
 package view;
 
 import controller.Controller;
+import exception.NoSuchIdException;
 import exception.NotUniqueIdException;
 import exception.NotUniqueNameException;
 import model.Customer;
@@ -35,6 +36,8 @@ public class CustomerView implements View {
                 return;
             } catch (IOException e) {
                 ConsoleHelper.writeToConsole("Wrong ID. Try again.\n");
+            } catch (NoSuchIdException e) {
+                ConsoleHelper.writeToConsole(e.getMessage());
             }
         }
     }
