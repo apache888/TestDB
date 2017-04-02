@@ -67,15 +67,17 @@ public class SkillView implements View {
         }
     }
 
+    //write to console information about received object
     private void writeById(Skill skill) {
-//        if (skill == null || (skill.getId() == 0 && skill.getName() == null)){
-//            ConsoleHelper.writeToConsole("\nThere is no such ID\n");
-//        }else {
-//            ConsoleHelper.writeToConsole("\n" + skill.toString() + "\n");
-//        }
-        ConsoleHelper.writeToConsole("\n" + skill.toString() + "\n");
+        if (skill == null || (skill.getId() == 0 && skill.getName() == null)){
+            ConsoleHelper.writeToConsole("\nThere is no such ID\n");
+        }else {
+            ConsoleHelper.writeToConsole("\n" + skill.toString() + "\n");
+        }
+//        ConsoleHelper.writeToConsole("\n" + skill.toString() + "\n");
     }
 
+    //write to console information about received list of objects
     private void writeAll(List<Skill> list) {
         if (list.isEmpty()) {
             ConsoleHelper.writeToConsole("\nThere are no records to view.\n");
@@ -88,6 +90,7 @@ public class SkillView implements View {
         }
     }
 
+    // create object by console dialog
     private Skill createSkill() {
         int id;
         while (true) {

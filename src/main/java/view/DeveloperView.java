@@ -71,6 +71,7 @@ public class DeveloperView implements View {
         }
     }
 
+    //write to console information about received object
     private void writeById(Developer dev) {
         if (dev == null || (dev.getId() == 0 && dev.getName() == null)){
             ConsoleHelper.writeToConsole("\nThere is no such ID\n");
@@ -79,6 +80,7 @@ public class DeveloperView implements View {
         }
     }
 
+    //write to console information about received list of objects
     private void writeAll(List<Developer> list) {
         if (list.isEmpty()) {
             ConsoleHelper.writeToConsole("\nThere are no records to view.\n");
@@ -91,13 +93,14 @@ public class DeveloperView implements View {
         }
     }
 
+    // create object by console dialog
     private Developer createDev() {
         Developer developer;
         int id;
         String devName;
         int exp;
         int salary;
-        Set<Skill> set = new HashSet<>();
+        Set<Skill> skills = new HashSet<>();
 
         while (true) {
             try {
@@ -140,33 +143,32 @@ public class DeveloperView implements View {
                 ConsoleHelper.writeToConsole("Input skill's IDs of developer: (for finish input 'exit')");
                 String str;
                 SkillController skillController = new SkillController();
+                Set<Integer> idSet = new HashSet<>();
                 while (!(str = ConsoleHelper.readString()).equalsIgnoreCase("exit")) {
                     try {
-                        int idSkill = Integer.parseInt(str);
-                        set.add(skillController.onGetById(idSkill));
+                        idSet.add(Integer.parseInt(str));
                     } catch (NumberFormatException e) {
                         ConsoleHelper.writeToConsole("Wrong integer. Try again");
-                    } catch (NoSuchIdException e) {
-                        ConsoleHelper.writeToConsole(e.getMessage());
                     }
                 }
+                try {
+                    for (Integer idSkill : idSet) {
+                        skills.add(skillController.onGetById(idSkill));
+                    }
+                } catch (NoSuchIdException e) {
+                    ConsoleHelper.writeToConsole(e.getMessage());
+                }
                 break;
-            } catch (IOException | NumberFormatException e) {
-                ConsoleHelper.writeToConsole("Wrong integer. Try again");
+            } catch (IOException e) {
+                ConsoleHelper.writeToConsole(e.getMessage());
             }
         }
 
         developer = new Developer(id, devName);
         developer.setExperience(exp);
         developer.setSalary(salary);
-        developer.setSkills(set);
+        developer.setSkills(skills);
 
         return developer;
     }
-
-//    private Developer updateDev() {
-//        Developer developer = null;
-//
-//        return developer;
-//    }
 }

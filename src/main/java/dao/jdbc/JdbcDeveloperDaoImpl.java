@@ -21,15 +21,15 @@ public class JdbcDeveloperDaoImpl implements DeveloperDao {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
 
-    private static final String SELECT_BY_ID = "SELECT * FROM developers WHERE id=";
+    private static final String SELECT_BY_ID = "SELECT * FROM developers WHERE id=?";
     private static final String SELECT_ALL = "SELECT * FROM developers";
     private static final String SELECT_BY_NAME = "SELECT * FROM developers WHERE name_dev=?";
-    private static final String DELETE_BY_ID = "DELETE FROM developers WHERE id=";
+    private static final String DELETE_BY_ID = "DELETE FROM developers WHERE id=?";
     private static final String INSERT = "INSERT INTO developers VALUES (?, ?, ?, ?)";
     private static final String INSERT_AUTO_ID = "INSERT INTO developers (name_dev, experience, salary) VALUES (?,?,?)";
     private static final String UPDATE_BY_ID = "UPDATE developers SET name_dev=?, experience=?, salary=? WHERE id=?";
 
-    private static final String SELECT_DEV_SKILLS_BY_ID = "SELECT skills.* FROM skills JOIN developers_skills on skill_id= skills.id and developer_id =";
+    private static final String SELECT_DEV_SKILLS_BY_ID = "SELECT skills.* FROM skills JOIN developers_skills on skill_id= skills.id and developer_id =?";
     private static final String INSERT_DEV_SKILL = "INSERT INTO developers_skills VALUES (?, ?)";
     private static final String SELECT_SKILLS_ID = "SELECT skill_id FROM developers_skills WHERE developer_id=?";
     private static final String DELETE_SKILLS = "DELETE FROM developers_skills WHERE developer_id=? AND skill_id=?";
@@ -65,9 +65,11 @@ public class JdbcDeveloperDaoImpl implements DeveloperDao {
     public Developer getById(int id) throws NoSuchIdException {
         Developer developer = null;
         try(Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(SELECT_BY_ID + id)){
+            PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID);
+            PreparedStatement ps = connection.prepareStatement(SELECT_DEV_SKILLS_BY_ID)){
 
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 int devId = resultSet.getInt("id");
                 String devName = resultSet.getString("name_dev");
@@ -77,16 +79,17 @@ public class JdbcDeveloperDaoImpl implements DeveloperDao {
                 developer.setExperience(exp);
                 developer.setSalary(salary);
             }
-            ResultSet rs = statement.executeQuery(SELECT_DEV_SKILLS_BY_ID + id);
-            Set<Skill> set = new HashSet<>();
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            Set<Skill> skills = new HashSet<>();
             while (rs.next()) {
                 int skill_id = rs.getInt("id");
                 String name = rs.getString("specialty");
-                set.add(new Skill(skill_id, name));
+                skills.add(new Skill(skill_id, name));
             }
             rs.close();
             if (developer != null) {
-                developer.setSkills(set);
+                developer.setSkills(skills);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -104,7 +107,7 @@ public class JdbcDeveloperDaoImpl implements DeveloperDao {
 
         try(Connection connection =DriverManager.getConnection(URL, USERNAME, PASSWORD);
             Statement statement = connection.createStatement();
-            Statement stmt = connection.createStatement();
+            PreparedStatement stmt = connection.prepareStatement(SELECT_DEV_SKILLS_BY_ID);
             ResultSet resultSet = statement.executeQuery(SELECT_ALL)){
 
             while (resultSet.next()) {
@@ -116,7 +119,8 @@ public class JdbcDeveloperDaoImpl implements DeveloperDao {
                 developer.setExperience(exp);
                 developer.setSalary(salary);
 
-                ResultSet rs = stmt.executeQuery(SELECT_DEV_SKILLS_BY_ID + devId);
+                stmt.setInt(1, devId);
+                ResultSet rs = stmt.executeQuery();
                 Set<Skill> set = new HashSet<>();
                 while (rs.next()) {
                     int skill_id = rs.getInt("id");
@@ -175,7 +179,7 @@ public class JdbcDeveloperDaoImpl implements DeveloperDao {
 
     public void delete(int id) {
         try(Connection connection =DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            Statement statement = connection.createStatement();
+            PreparedStatement statement = connection.prepareStatement(DELETE_BY_ID);
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_SKILLS_ID);
             PreparedStatement ps = connection.prepareStatement(DELETE_SKILLS)){
 
@@ -191,25 +195,31 @@ public class JdbcDeveloperDaoImpl implements DeveloperDao {
                 ps.addBatch();
             }
             ps.executeBatch();
-            statement.executeUpdate(DELETE_BY_ID + id);
+            statement.setInt(1, id);
+            statement.executeUpdate();
         }catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    //check if record with such 'id' exists in database
     private boolean existWithId(Connection connection, int id) throws SQLException {
-        Statement statement = connection.createStatement();
-        ResultSet rs = statement.executeQuery(SELECT_BY_ID + id);
-        return rs.next();
-    }
-
-    private boolean existWithName(Connection connection, String name) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement(SELECT_BY_NAME);
-        statement.setString(1, name);
+        PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID);
+        statement.setInt(1, id);
         ResultSet rs = statement.executeQuery();
         return rs.next();
     }
 
+    //check if record with such 'name' exists in database
+    private boolean existWithName(Connection connection, String name) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(SELECT_BY_NAME);
+        statement.setString(1, name);
+        ResultSet rs = statement.executeQuery();
+        rs.next();
+        return name.equalsIgnoreCase(rs.getString("name_dev"));
+    }
+
+    //create relation records between developer and skills in suitable table in database
     private void createDevSkillsRecords(Connection connection, Developer developer) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(INSERT_DEV_SKILL);
         for (Skill skill : developer.getSkills()) {

@@ -52,4 +52,7 @@ public class Developer extends BaseObject {
         }
         return builder.substring(0, builder.length() - 2) + "}\n";
     }
+
+    //todo
+    //override hashCode and equals, correct createXxxx in xxxView
 }

@@ -1,6 +1,7 @@
 package dao.jdbc;
 
 import dao.CustomerDao;
+import dao.ProjectDao;
 import exception.NoSuchIdException;
 import exception.NotUniqueIdException;
 import exception.NotUniqueNameException;
@@ -76,7 +77,7 @@ public class JdbcCustomerDaoImpl implements CustomerDao {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             Set<Project> projects = new HashSet<>();
-            JdbcProjectDaoImpl projectDao = new JdbcProjectDaoImpl();
+            ProjectDao projectDao = new JdbcProjectDaoImpl();
             while (rs.next()) {
                 int projectId = rs.getInt("project_id");
                 Project project = projectDao.getById(projectId);
@@ -112,7 +113,7 @@ public class JdbcCustomerDaoImpl implements CustomerDao {
                 stmt.setInt(1, customerId);
                 ResultSet rs = stmt.executeQuery();
                 Set<Project> projects = new HashSet<>();
-                JdbcProjectDaoImpl projectDao = new JdbcProjectDaoImpl();
+                ProjectDao projectDao = new JdbcProjectDaoImpl();
                 while (rs.next()) {
                     int projectId = rs.getInt("project_id");
                     Project project = projectDao.getById(projectId);
@@ -192,6 +193,7 @@ public class JdbcCustomerDaoImpl implements CustomerDao {
         }
     }
 
+    //check if record with such 'id' exists in database
     private boolean existWithId(Connection connection, int id) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID);
         statement.setInt(1, id);
@@ -199,6 +201,7 @@ public class JdbcCustomerDaoImpl implements CustomerDao {
         return rs.next();
     }
 
+    //check if record with such 'name' exists in database
     private boolean existWithName(Connection connection, String name) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(SELECT_BY_NAME);
         statement.setString(1, name);
@@ -206,6 +209,7 @@ public class JdbcCustomerDaoImpl implements CustomerDao {
         return rs.next();
     }
 
+    //create relation records between customer and projects in suitable table in database
     private void createCompanyProjectsRecords(Connection connection, Customer customer) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(INSERT_CUSTOMER_PROJECT);
         for (Project project : customer.getCustomerProjects()) {

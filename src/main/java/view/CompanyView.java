@@ -52,7 +52,7 @@ public class CompanyView implements View {
     @Override
     public void fireEventUpdate() throws NotUniqueNameException, NotUniqueIdException {
         ConsoleHelper.writeToConsole("Creating Company object for update...");
-         controller.onUpdate(createCompany());
+        controller.onUpdate(createCompany());
     }
 
     @Override
@@ -69,6 +69,7 @@ public class CompanyView implements View {
         }
     }
 
+    //write to console information about received object
     private void writeById(Company company) {
         if (company == null || (company.getId() == 0 && company.getName() == null)){
             ConsoleHelper.writeToConsole("\nThere is no such ID\n");
@@ -77,6 +78,7 @@ public class CompanyView implements View {
         }
     }
 
+    //write to console information about received list of objects
     private void writeAll(List<Company> list) {
         if (list.isEmpty()) {
             ConsoleHelper.writeToConsole("\nThere are no records to view.\n");
@@ -89,6 +91,7 @@ public class CompanyView implements View {
         }
     }
 
+    // create object by console dialog
     private Company createCompany() {
         Company company;
         int id;
@@ -123,7 +126,10 @@ public class CompanyView implements View {
                         int idProject = Integer.parseInt(str);
                         ConsoleHelper.writeToConsole("share:");
                         int shareProject = Integer.parseInt(ConsoleHelper.readString());
-                        projects.put(projectController.onGetById(idProject), shareProject);
+                        Project project = projectController.onGetById(idProject);
+                        if (!projects.containsKey(project)) {
+                            projects.put(project, shareProject);
+                        }
                     } catch (NumberFormatException e) {
                         ConsoleHelper.writeToConsole("Wrong integer. Try again");
                     } catch (NoSuchIdException e) {
@@ -131,8 +137,8 @@ public class CompanyView implements View {
                     }
                 }
                 break;
-            } catch (IOException | NumberFormatException e) {
-                ConsoleHelper.writeToConsole("Wrong integer. Try again");
+            } catch (IOException e) {
+                ConsoleHelper.writeToConsole(e.getMessage());
             }
         }
         company = new Company(id, companyName);

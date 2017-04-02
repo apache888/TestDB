@@ -1,6 +1,7 @@
 package dao.jdbc;
 
 import dao.CompanyDao;
+import dao.ProjectDao;
 import exception.NoSuchIdException;
 import exception.NotUniqueIdException;
 import exception.NotUniqueNameException;
@@ -72,7 +73,7 @@ public class JdbcCompanyDaoImpl implements CompanyDao {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             Map<Project, Integer> projects = new HashMap<>();
-            JdbcProjectDaoImpl projectDao = new JdbcProjectDaoImpl();
+            ProjectDao projectDao = new JdbcProjectDaoImpl();
             while (rs.next()) {
                 int projectId = rs.getInt("project_id");
                 int share = rs.getInt("share");
@@ -110,7 +111,7 @@ public class JdbcCompanyDaoImpl implements CompanyDao {
                 ps.setInt(1, companyId);
                 ResultSet rs = ps.executeQuery();
                 Map<Project, Integer> projects = new HashMap<>();
-                JdbcProjectDaoImpl projectDao = new JdbcProjectDaoImpl();
+                ProjectDao projectDao = new JdbcProjectDaoImpl();
                 while (rs.next()) {
                     int projectId = rs.getInt("project_id");
                     int share = rs.getInt("share");
@@ -198,6 +199,7 @@ public class JdbcCompanyDaoImpl implements CompanyDao {
         }
     }
 
+    //check if record with such 'id' exists in database
     private boolean existWithId(Connection connection, int id) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID);
         statement.setInt(1, id);
@@ -205,6 +207,7 @@ public class JdbcCompanyDaoImpl implements CompanyDao {
         return rs.next();
     }
 
+    //check if record with such 'name' exists in database
     private boolean existWithName(Connection connection, String name) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(SELECT_BY_NAME);
         statement.setString(1, name);
@@ -212,6 +215,7 @@ public class JdbcCompanyDaoImpl implements CompanyDao {
         return rs.next();
     }
 
+    //create relation records between company and projects in suitable table in database
     private void createCompanyProjectsRecords(Connection connection, Company company) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(INSERT_COMPANY_PROJECT);
         for (Map.Entry<Project, Integer> project : company.getCompanyProjects().entrySet()) {

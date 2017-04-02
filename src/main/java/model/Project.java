@@ -45,4 +45,32 @@ public class Project extends BaseObject{
         }
         return builder.substring(0, builder.length() - 2) + "}\n";
     }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 37*result + id;
+        result = 37*result + (name == null ? 0: name.hashCode());
+        result = 37*result + cost;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Project project = (Project) obj;
+        if (id != project.getId())
+            return false;
+        if (!name.equalsIgnoreCase(project.getName()))
+            return false;
+        if (cost != project.getCost())
+            return false;
+
+        return true;
+    }
 }

@@ -11,15 +11,18 @@ import java.io.InputStreamReader;
 /**
  * Create by Roman Hayda on 23.03.2017.
  */
+//Class for console working
 public class ConsoleHelper {
     private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private View view;
     private Controller controller;
 
+    //main method to start application
     public void startApp() {
         showEntitiesMenu();
     }
 
+    //method show all entities to select
     private void showEntitiesMenu() {
         while (true) {
             try {
@@ -74,6 +77,7 @@ public class ConsoleHelper {
         }
     }
 
+    //method show all CRUD commands to manipulate entities
     private void showCommandsMenu() {
         while (true) {
             try {
@@ -116,13 +120,13 @@ public class ConsoleHelper {
         }
     }
 
+    //read line from console to String
     public static String readString() throws IOException {
         return reader.readLine();
     }
 
+    //write to console received message
     public static void writeToConsole(String message) {
         System.out.println(message);
     }
-
-
 }

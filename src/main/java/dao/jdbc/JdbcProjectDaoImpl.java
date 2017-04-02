@@ -1,5 +1,6 @@
 package dao.jdbc;
 
+import dao.DeveloperDao;
 import dao.ProjectDao;
 import exception.NoSuchIdException;
 import exception.NotUniqueIdException;
@@ -21,16 +22,16 @@ public class JdbcProjectDaoImpl implements ProjectDao {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
 
-    private static final String SELECT_BY_ID = "SELECT * FROM projects WHERE id=";
+    private static final String SELECT_BY_ID = "SELECT * FROM projects WHERE id=?";
     private static final String SELECT_ALL = "SELECT * FROM projects";
     private static final String SELECT_BY_NAME = "SELECT * FROM projects WHERE name_project=?";
-    private static final String DELETE_BY_ID = "DELETE FROM projects WHERE id=";
+    private static final String DELETE_BY_ID = "DELETE FROM projects WHERE id=?";
     private static final String INSERT = "INSERT INTO projects VALUES (?,?,?)";
     private static final String INSERT_AUTO_ID = "INSERT INTO projects (name_project, cost) VALUES (?,?)";
     private static final String UPDATE_BY_ID = "UPDATE projects SET name_project=?, cost=? WHERE id=?";
 
 
-    private static final String SELECT_PROJECT_DEVS_BY_ID = "SELECT developers.* FROM developers JOIN projects_developers on developer_id= developers.id and project_id =";
+    private static final String SELECT_PROJECT_DEVS_BY_ID = "SELECT developers.* FROM developers JOIN projects_developers on developer_id= developers.id and project_id =?";
     private static final String INSERT_PROJECT_DEV = "INSERT INTO projects_developers VALUES (?, ?)";
     private static final String SELECT_DEVS_ID = "SELECT developer_id FROM projects_developers WHERE project_id=?";
     private static final String DELETE_DEVS = "DELETE FROM projects_developers WHERE project_id=? AND developer_id=?";
@@ -64,26 +65,31 @@ public class JdbcProjectDaoImpl implements ProjectDao {
     public Project getById(int id) throws NoSuchIdException {
         Project project = null;
         try(Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(SELECT_BY_ID + id)){
+            PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID);
+            PreparedStatement ps = connection.prepareStatement(SELECT_PROJECT_DEVS_BY_ID)){
 
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                int projId = resultSet.getInt("id");
+                int projectId = resultSet.getInt("id");
                 String nameProject = resultSet.getString("name_project");
                 int cost = resultSet.getInt("cost");
-                project = new Project(projId, nameProject);
+                project = new Project(projectId, nameProject);
                 project.setCost(cost);
             }
-            ResultSet rs = statement.executeQuery(SELECT_PROJECT_DEVS_BY_ID + id);
-            Set<Developer> set = new HashSet<>();
+            ps.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            Set<Developer> developers = new HashSet<>();
+            DeveloperDao developerDao = new JdbcDeveloperDaoImpl();
             while (rs.next()) {
                 int devId = rs.getInt("id");
-                String nameDev = rs.getString("name_dev");
-                set.add(new Developer(devId, nameDev));
+                Developer developer = developerDao.getById(devId);
+                developers.add(developer);
             }
             rs.close();
+            resultSet.close();
             if (project != null) {
-                project.setProjectDevelopers(set);
+                project.setProjectDevelopers(developers);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -100,29 +106,31 @@ public class JdbcProjectDaoImpl implements ProjectDao {
 
         try(Connection connection =DriverManager.getConnection(URL, USERNAME, PASSWORD);
             Statement statement = connection.createStatement();
-            Statement stmt = connection.createStatement();
+            PreparedStatement ps = connection.prepareStatement(SELECT_PROJECT_DEVS_BY_ID);
             ResultSet resultSet = statement.executeQuery(SELECT_ALL)){
 
             while (resultSet.next()) {
-                int projId = resultSet.getInt("id");
+                int projectId = resultSet.getInt("id");
                 String nameProject = resultSet.getString("name_project");
                 int cost = resultSet.getInt("cost");
-                Project project = new Project(projId, nameProject);
+                Project project = new Project(projectId, nameProject);
                 project.setCost(cost);
 
-                ResultSet rs = stmt.executeQuery(SELECT_PROJECT_DEVS_BY_ID + projId);
+                ps.setInt(1, projectId);
+                ResultSet rs = ps.executeQuery();
                 Set<Developer> set = new HashSet<>();
+                DeveloperDao developerDao = new JdbcDeveloperDaoImpl();
                 while (rs.next()) {
                     int devId = rs.getInt("id");
-                    String nameDev = rs.getString("name_dev");
-                    set.add(new Developer(devId, nameDev));
+                    Developer developer = developerDao.getById(devId);
+                    set.add(developer);
                 }
                 rs.close();
                 project.setProjectDevelopers(set);
                 list.add(project);
             }
-            return list;
-        } catch (SQLException e) {
+            resultSet.close();
+        } catch (SQLException | NoSuchIdException e) {
             e.printStackTrace();
         }
         return list;
@@ -168,7 +176,7 @@ public class JdbcProjectDaoImpl implements ProjectDao {
 
     public void delete(int id) {
         try(Connection connection =DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            Statement statement = connection.createStatement();
+            PreparedStatement statement = connection.prepareStatement(DELETE_BY_ID);
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DEVS_ID);
             PreparedStatement ps = connection.prepareStatement(DELETE_DEVS)){
 
@@ -184,18 +192,22 @@ public class JdbcProjectDaoImpl implements ProjectDao {
                 ps.addBatch();
             }
             ps.executeBatch();
-            statement.executeUpdate(DELETE_BY_ID + id);
+            statement.setInt(1, id);
+            statement.executeUpdate();
         }catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    //check if record with such 'id' exists in database
     private boolean existWithId(Connection connection, int id) throws SQLException {
-        Statement statement = connection.createStatement();
-        ResultSet rs = statement.executeQuery(SELECT_BY_ID + id);
+        PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID);
+        statement.setInt(1, id);
+        ResultSet rs = statement.executeQuery();
         return rs.next();
     }
 
+    //check if record with such 'name' exists in database
     private boolean existWithName(Connection connection, String name) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(SELECT_BY_NAME);
         statement.setString(1, name);
@@ -203,6 +215,7 @@ public class JdbcProjectDaoImpl implements ProjectDao {
         return rs.next();
     }
 
+    //create relation records between project and developers in suitable table in database
     private void createProjectDevsRecords(Connection connection, Project project) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(INSERT_PROJECT_DEV);
         for (Developer dev : project.getProjectDevelopers()) {

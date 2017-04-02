@@ -16,4 +16,7 @@ public class Skill extends BaseObject {
                 ", specialty='" + name + '\'' +
                 '}';
     }
+
+    //todo
+    //override hashCode and equals, correct createXxxx in xxxView
 }

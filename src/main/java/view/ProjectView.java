@@ -71,6 +71,7 @@ public class ProjectView implements View {
         }
     }
 
+    //write to console information about received object
     private void writeById(Project project) {
         if (project == null || (project.getId() == 0 && project.getName() == null)){
             ConsoleHelper.writeToConsole("\nThere is no such ID\n");
@@ -79,6 +80,7 @@ public class ProjectView implements View {
         }
     }
 
+    //write to console information about received list of objects
     private void writeAll(List<Project> list) {
         if (list.isEmpty()) {
             ConsoleHelper.writeToConsole("\nThere are no records to view.\n");
@@ -91,12 +93,13 @@ public class ProjectView implements View {
         }
     }
 
+    // create object by console dialog
     private Project createProject() {
         Project project;
         int id;
         String projectName;
         int cost;
-        Set<Developer> set = new HashSet<>();
+        Set<Developer> developers = new HashSet<>();
 
         while (true) {
             try {
@@ -130,25 +133,30 @@ public class ProjectView implements View {
                 ConsoleHelper.writeToConsole("Input developer's IDs of project: (for finish input 'exit')");
                 String str;
                 DeveloperController devController = new DeveloperController();
+                Set<Integer> idSet = new HashSet<>();
                 while (!(str = ConsoleHelper.readString()).equalsIgnoreCase("exit")) {
                     try {
-                        int idDev = Integer.parseInt(str);
-                        set.add(devController.onGetById(idDev));
+                        idSet.add(Integer.parseInt(str));
                     } catch (NumberFormatException e) {
                         ConsoleHelper.writeToConsole("Wrong integer. Try again");
-                    } catch (NoSuchIdException e) {
-                        ConsoleHelper.writeToConsole(e.getMessage());
                     }
                 }
+                try {
+                    for (Integer idDev : idSet) {
+                        developers.add(devController.onGetById(idDev));
+                    }
+                } catch (NoSuchIdException e) {
+                    ConsoleHelper.writeToConsole(e.getMessage());
+                }
                 break;
-            } catch (IOException | NumberFormatException e) {
-                ConsoleHelper.writeToConsole("Wrong integer. Try again");
+            } catch (IOException e) {
+                ConsoleHelper.writeToConsole(e.getMessage());
             }
         }
 
         project = new Project(id, projectName);
         project.setCost(cost);
-        project.setProjectDevelopers(set);
+        project.setProjectDevelopers(developers);
 
         return project;
     }

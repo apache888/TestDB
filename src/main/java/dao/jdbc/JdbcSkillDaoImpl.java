@@ -64,9 +64,9 @@ public class JdbcSkillDaoImpl implements SkillDao {
             ResultSet resultSet = statement.executeQuery(SELECT_BY_ID + id)){
 
             while (resultSet.next()) {
-                int skill_id = resultSet.getInt("id");   //такое имя переменной для читаемости
-                String name = resultSet.getString("specialty");
-                skill = new Skill(skill_id, name);
+                int skillId = resultSet.getInt("id");
+                String specialty = resultSet.getString("specialty");
+                skill = new Skill(skillId, specialty);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -87,9 +87,9 @@ public class JdbcSkillDaoImpl implements SkillDao {
 
             Skill skill;
             while (resultSet.next()) {
-                int skill_id = resultSet.getInt("id");
-                String name = resultSet.getString("specialty");
-                skill = new Skill(skill_id, name);
+                int skillId = resultSet.getInt("id");
+                String specialty = resultSet.getString("specialty");
+                skill = new Skill(skillId, specialty);
                 list.add(skill);
             }
             return list;
@@ -130,12 +130,14 @@ public class JdbcSkillDaoImpl implements SkillDao {
         }
     }
 
+    //check if record with such 'id' exists in database
     private boolean existWithId(Connection connection, int id) throws SQLException {
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery(SELECT_BY_ID + id);
         return rs.next();
     }
 
+    //check if record with such 'name' exists in database
     private boolean existWithName(Connection connection, String name) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(SELECT_BY_NAME);
         statement.setString(1, name);
