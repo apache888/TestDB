@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">
+            org.hibernate.dialect.MySQLDialect
+        </property>
+        <property name="hibernate.connection.driver_class">
+            com.mysql.cj.jdbc.Driver
+        </property>
+        <!-- Echo all executed SQL to stdout -->
+        <property name="show_sql">true</property>
+        <property name="hibernate.ejb.naming_strategy">
+            org.hibernate.cfg.ImprovedNamingStrategy
+        </property>
+        <property name="hibernate.current_session_context_class">thread</property>
+
+        <!--DB settings-->
+        <property name="hibernate.connection.url">
+            jdbc:mysql://localhost/it_test_db?useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;useSSL=false
+        </property>
+        <property name="hibernate.connection.username">
+            root
+        </property>
+        <property name="hibernate.connection.password">
+            root
+        </property>
+
+        <!-- List of Entities mapping files -->
+        <mapping class="com.training.app.model.Developer"/>
+        <mapping class="com.training.app.model.Skill"/>
+        <mapping class="com.training.app.model.Project"/>
+        <mapping class="com.training.app.model.Company"/>
+        <mapping class="com.training.app.model.Customer"/>
+
+    </session-factory>
+</hibernate-configuration>

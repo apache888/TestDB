@@ -20,13 +20,22 @@
         </plugins>
     </build>
 
+    <properties>
+        <mysql-connector.version>6.0.5</mysql-connector.version>
+        <hibernate.version>5.2.9.Final</hibernate.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>6.0.5</version>
+            <version>${mysql-connector.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

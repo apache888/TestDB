@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.training.app.model.Developer" table="developers">
+        <meta attribute="class-description">
+            This class contains developer details.
+        </meta>
+        <id name="id" type="int" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="name" column="name_dev" type="string"/>
+        <property name="experience" column="experience" type="int"/>
+        <property name="salary" column="salary" type="int"/>
+        <!--<property name="skills" column="" type=""/>-->
+        <set name="skills" table="developers_skills" inverse="false" lazy="true" fetch="select" cascade="all">
+            <key>
+                <column name="skill_id" not-null="true"/>
+            </key>
+            <one-to-many class="com.training.app.model.Skill"/>
+        </set>
+    </class>
+
+</hibernate-mapping>
