@@ -117,7 +117,10 @@ public class ConsoleHelper {
             } catch (IllegalArgumentException e) {
                 writeToConsole(e.getMessage());
                 writeToConsole("Wrong command. Try again.");
-            }
+            } /*catch (SQLException se) {
+                writeToConsole(se.getMessage());
+                writeToConsole("Failed execute. Try again.");
+            }*/
         }
     }
 

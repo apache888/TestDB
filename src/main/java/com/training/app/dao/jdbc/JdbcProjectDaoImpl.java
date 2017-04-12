@@ -72,7 +72,7 @@ public class JdbcProjectDaoImpl implements ProjectDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 int projectId = resultSet.getInt("id");
-                String nameProject = resultSet.getString("name_project");
+                String nameProject = resultSet.getString("name");
                 int cost = resultSet.getInt("cost");
                 project = new Project(projectId, nameProject);
                 project.setCost(cost);
@@ -111,7 +111,7 @@ public class JdbcProjectDaoImpl implements ProjectDao {
 
             while (resultSet.next()) {
                 int projectId = resultSet.getInt("id");
-                String nameProject = resultSet.getString("name_project");
+                String nameProject = resultSet.getString("name");
                 int cost = resultSet.getInt("cost");
                 Project project = new Project(projectId, nameProject);
                 project.setCost(cost);

@@ -67,7 +67,7 @@ public class JdbcCompanyDaoImpl implements CompanyDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 int companyId = resultSet.getInt("id");
-                String nameCompany = resultSet.getString("name_company");
+                String nameCompany = resultSet.getString("name");
                 company = new Company(companyId, nameCompany);
             }
             ps.setInt(1, id);
@@ -105,7 +105,7 @@ public class JdbcCompanyDaoImpl implements CompanyDao {
 
             while (resultSet.next()) {
                 int companyId = resultSet.getInt("id");
-                String nameCompany = resultSet.getString("name_company");
+                String nameCompany = resultSet.getString("name");
                 Company company = new Company(companyId, nameCompany);
 
                 ps.setInt(1, companyId);

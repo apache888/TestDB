@@ -1,7 +1,7 @@
 package com.training.app.controller;
 
-import com.training.app.dao.jdbc.JdbcProjectDaoImpl;
 import com.training.app.dao.ProjectDao;
+import com.training.app.dao.hibernate.HibernateProjectDaoImpl;
 import com.training.app.exception.NoSuchIdException;
 import com.training.app.exception.NotUniqueIdException;
 import com.training.app.exception.NotUniqueNameException;
@@ -13,7 +13,8 @@ import java.util.List;
  * Create by Roman Hayda on 29.03.2017.
  */
 public class ProjectController implements Controller<Project> {
-    private ProjectDao projectDao = new JdbcProjectDaoImpl();
+//    private ProjectDao projectDao = new JdbcProjectDaoImpl();
+    private ProjectDao projectDao = new HibernateProjectDaoImpl();
 
     @Override
     public void onCreate(Project project) throws NotUniqueNameException, NotUniqueIdException {

@@ -70,7 +70,7 @@ public class JdbcCustomerDaoImpl implements CustomerDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 int customerId = resultSet.getInt("id");
-                String nameCustomer = resultSet.getString("name_customer");
+                String nameCustomer = resultSet.getString("name");
                 customer = new Customer(customerId, nameCustomer);
             }
 
@@ -108,7 +108,7 @@ public class JdbcCustomerDaoImpl implements CustomerDao {
 
             while (resultSet.next()) {
                 int customerId = resultSet.getInt("id");
-                String nameCustomer = resultSet.getString("name_customer");
+                String nameCustomer = resultSet.getString("name");
                 Customer customer = new Customer(customerId, nameCustomer);
                 stmt.setInt(1, customerId);
                 ResultSet rs = stmt.executeQuery();

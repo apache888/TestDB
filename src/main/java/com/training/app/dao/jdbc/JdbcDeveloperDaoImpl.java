@@ -72,7 +72,7 @@ public class JdbcDeveloperDaoImpl implements DeveloperDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 int devId = resultSet.getInt("id");
-                String devName = resultSet.getString("name_dev");
+                String devName = resultSet.getString("name");
                 int exp = resultSet.getInt("experience");
                 int salary = resultSet.getInt("salary");
                 developer = new Developer(devId, devName);
@@ -112,7 +112,7 @@ public class JdbcDeveloperDaoImpl implements DeveloperDao {
 
             while (resultSet.next()) {
                 int devId = resultSet.getInt("id");
-                String name = resultSet.getString("name_dev");
+                String name = resultSet.getString("name");
                 int exp = resultSet.getInt("experience");
                 int salary = resultSet.getInt("salary");
                 Developer developer = new Developer(devId, name);
@@ -216,7 +216,7 @@ public class JdbcDeveloperDaoImpl implements DeveloperDao {
         statement.setString(1, name);
         ResultSet rs = statement.executeQuery();
         rs.next();
-        return name.equalsIgnoreCase(rs.getString("name_dev"));
+        return name.equalsIgnoreCase(rs.getString("name"));
     }
 
     //create relation records between developer and skills in suitable table in database

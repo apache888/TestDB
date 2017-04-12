@@ -1,13 +1,26 @@
 package com.training.app.model;
 
+import javax.persistence.*;
 import java.util.Set;
 
 /**
  * Create by Roman Hayda on 24.03.2017.
  */
+@Entity
+@Table(name = "projects", catalog = "it_test_db")
 public class Project extends BaseObject{
+    @Column(name = "cost")
     private int cost = 1000;
+    @ManyToMany
+    @JoinTable(name="projects_developers",
+            joinColumns= @JoinColumn(name="project_id", referencedColumnName="id"),//?
+            inverseJoinColumns= @JoinColumn(name="developer_id", referencedColumnName="id")//?
+    )
     private Set<Developer> projectDevelopers;
+
+    public Project(){
+
+    }
 
     public Project(int id, String name) {
         super(id, name);
