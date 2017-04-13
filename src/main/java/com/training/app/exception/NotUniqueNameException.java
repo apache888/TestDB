@@ -1,7 +1,10 @@
 package com.training.app.exception;
 
 /**
- * Create by Roman Hayda on 29.03.2017.
+ * Create on 01.04.2017.
+ * @author Roman Hayda
+ *
+ * Class describes Exception when there is not unique Name for database
  */
 public class NotUniqueNameException extends DBException {
 

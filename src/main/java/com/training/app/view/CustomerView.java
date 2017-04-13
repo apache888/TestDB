@@ -14,7 +14,11 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Create by Roman Hayda on 29.03.2017.
+ * Create on 29.03.2017.
+ * @author Roman Hayda
+ *
+ * Class implements interface View for Customer object
+ * class contains methods to fire CRUD events
  */
 public class CustomerView implements View {
     private Controller<Customer> controller;
@@ -72,7 +76,10 @@ public class CustomerView implements View {
         }
     }
 
-    //write to console information about received object
+    /**
+     * write to console information about received object
+     * @param customer - Customer object
+     */
     private void writeById(Customer customer) {
         if (customer == null || (customer.getId() == 0 && customer.getName() == null)){
             ConsoleHelper.writeToConsole("\nThere is no such ID\n");
@@ -81,7 +88,10 @@ public class CustomerView implements View {
         }
     }
 
-    //write to console information about received list of objects
+    /**
+     *write to console information about received list of objects
+     * @param list - list of Customer objects
+     */
     private void writeAll(List<Customer> list) {
         if (list.isEmpty()) {
             ConsoleHelper.writeToConsole("\nThere are no records to org.training.app.view.\n");
@@ -94,7 +104,10 @@ public class CustomerView implements View {
         }
     }
 
-    // create object by console dialog
+    /**
+     * create object by console dialog
+     * @return Customer object
+     */
     private Customer createCustomer() {
         Customer customer;
         int id;

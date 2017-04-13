@@ -8,23 +8,47 @@ import com.training.app.model.Skill;
 import java.util.List;
 
 /**
- * Create by Roman Hayda on 24.03.2017.
+ * Create on 24.03.2017.
+ * @author Roman Hayda
+ *
+ * interface describes DAO layer for entity Skill
+ * contains CRUD methods
  */
-//DAO layer for object Skill
 public interface SkillDao{
 
-    //create object in database
+    /**
+     * create Skill object in database
+     * @param skill - given Skill object
+     * @throws NotUniqueIdException
+     * @throws NotUniqueNameException
+     */
     void create(Skill skill) throws NotUniqueIdException, NotUniqueNameException;
 
-    //receive object by id from database
+    /**
+     * receive Skill object by ID from database
+     * @param id - object ID in database
+     * @return Skill object
+     * @throws NoSuchIdException
+     */
     Skill getById(int id) throws NoSuchIdException;
 
-    //receive list of all objects from database
+    /**
+     * receive list of all Skill objects from database
+     * @return List<Skill>
+     */
     List<Skill> getAll();
 
-    //update object in database
+    /**
+     * update Skill object in database
+     * @param skill - Skill object
+     * @throws NotUniqueNameException
+     * @throws NotUniqueIdException
+     */
     void update(Skill skill) throws NotUniqueNameException, NotUniqueIdException;
 
-    //delete object from database
+    /**
+     * delete Skill object from database by ID
+     * @param id - object ID in database
+     */
     void delete(int id);
 }

@@ -11,7 +11,11 @@ import javax.persistence.NoResultException;
 import java.util.List;
 
 /**
- * Create by Roman Hayda on 08.04.2017.
+ * Create on 08.04.2017.
+ * @author Roman Hayda
+ *
+ * Class implements DAO layer for entity Developer
+ * contains CRUD methods
  */
 public class HibernateDeveloperDaoImpl implements DeveloperDao {
 
@@ -19,16 +23,14 @@ public class HibernateDeveloperDaoImpl implements DeveloperDao {
     public void create(Developer developer) throws NotUniqueIdException, NotUniqueNameException {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        try {
-        /*if (existWithId(session, skill.getId())) {
-            throw new NotUniqueIdException("ID " + skill.getId() + " not unique.");
-        } else*/
+        /*try {
             if (existWithName(session, developer.getName())) {
-                throw new NotUniqueNameException("Specialty \'" + developer.getName() + "\' not unique");
+                session.getTransaction().rollback();
+                throw new NotUniqueNameException("Developer name \'" + developer.getName() + "\' not unique");
             }
         } catch (NoResultException e) {
             //NOP
-        }
+        }*/
         session.save(developer);
         session.flush();
         session.getTransaction().commit();
@@ -38,10 +40,14 @@ public class HibernateDeveloperDaoImpl implements DeveloperDao {
     public Developer getById(int id) throws NoSuchIdException {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-//        Developer developer = session.get(Developer.class, id);
-//        List<Skill> skills = session.createQuery("",Skill.class).list();
-        Developer developer = (Developer) session.createQuery("from Developer D join fetch D.skills where D.id= :id").setParameter("id", id).getSingleResult();
-        session.getTransaction().commit();
+        Developer developer = null;
+        try {
+            developer = (Developer) session.createQuery("from Developer D join fetch D.skills where D.id= :id").setParameter("id", id).getSingleResult();
+            session.getTransaction().commit();
+        } catch (RuntimeException e) {
+            session.getTransaction().rollback();
+            throw new NoSuchIdException("No such ID");
+        }
         return developer;
     }
 
@@ -49,8 +55,6 @@ public class HibernateDeveloperDaoImpl implements DeveloperDao {
     public List<Developer> getAll() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-//        Criteria criteria = session.createCriteria(Developer.class);
-//        List<Developer> developers = criteria.list();
         List<Developer> developers = (List<Developer>) session.createQuery("from Developer D join fetch D.skills").getResultList();
         session.getTransaction().commit();
         return developers;
@@ -60,32 +64,43 @@ public class HibernateDeveloperDaoImpl implements DeveloperDao {
     public void update(Developer developer) throws NotUniqueNameException, NotUniqueIdException {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        /*if (existWithId(session, developer.getId())) {
-            throw new NotUniqueIdException("ID " + developer.getId() + " not unique.");
-        }*/
-        session.saveOrUpdate(developer);
-//        session.update(developer);
-        session.flush();
-        session.getTransaction().commit();
+        try {
+            Developer devFromDB = getById(developer.getId());
+            devFromDB.setExperience(developer.getExperience());
+            devFromDB.setSalary(developer.getSalary());
+            devFromDB.setSkills(developer.getSkills());
+            session.update(devFromDB);
+            session.flush();
+            session.getTransaction().commit();
+        } catch (NoSuchIdException e) {
+            session.getTransaction().rollback();
+            create(developer);
+        }
     }
 
     @Override
     public void delete(int id) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        Developer developer = session.get(Developer.class, id);
-        session.delete(developer);
-        session.flush();
-        session.getTransaction().commit();
+        try {
+            Developer developer = session.get(Developer.class, id);
+            session.delete(developer);
+            session.flush();
+            session.getTransaction().commit();
+        } catch (RuntimeException e) {
+            session.getTransaction().rollback();
+            throw new IllegalArgumentException("No such ID");
+        }
     }
-
+    /**
+     * Method checks if exist Developer object with same name in database
+     * @param session
+     * @param name
+     * @return
+     * @throws NoResultException
+     */
     private boolean existWithName(Session session, String name) throws NoResultException {
 
         return session.createQuery("select D.name from Developer as D where D.name =\'" + name + "\'").getSingleResult() != null;
-    }
-
-    private boolean existWithId(Session session, int id) throws NoResultException {
-//        return session.get(Skill.class, id) != null;
-        return session.createQuery("select D.id from Developer as D where D.id =" + id).getSingleResult() != null;
     }
 }

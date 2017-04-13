@@ -12,7 +12,11 @@ import javax.persistence.NoResultException;
 import java.util.List;
 
 /**
- * Create by Roman Hayda on 08.04.2017.
+ * Create on 08.04.2017.
+ * @author Roman Hayda
+ *
+ * Class implements DAO layer for entity Skill
+ * contains CRUD methods
  */
 public class HibernateSkillDaoImpl implements SkillDao {
 
@@ -21,11 +25,9 @@ public class HibernateSkillDaoImpl implements SkillDao {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         try {
-        /*if (existWithId(session, skill.getId())) {
-            throw new NotUniqueIdException("ID " + skill.getId() + " not unique.");
-        } else*/
-            if (existWithName(session, skill.getSpecialty())) {
-                throw new NotUniqueNameException("Specialty \'" + skill.getSpecialty() + "\' not unique");
+            if (existWithName(session, skill.getName())) {
+                session.getTransaction().rollback();
+                throw new NotUniqueNameException("Specialty \'" + skill.getName() + "\' not unique");
             }
         } catch (NoResultException e) {
             //NOP
@@ -44,6 +46,7 @@ public class HibernateSkillDaoImpl implements SkillDao {
         return skill;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public List<Skill> getAll() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -58,11 +61,15 @@ public class HibernateSkillDaoImpl implements SkillDao {
     public void update(Skill skill) throws NotUniqueNameException, NotUniqueIdException {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        /*if (existWithId(session, skill.getId())) {
-            throw new NotUniqueIdException("ID " + skill.getId() + " not unique.");
-        }*/
+        try {
+            if (existWithName(session, skill.getName())) {
+                session.getTransaction().rollback();
+                throw new NotUniqueNameException("Specialty \'" + skill.getName() + "\' not unique");
+            }
+        } catch (NoResultException e) {
+            //NOP
+        }
         session.saveOrUpdate(skill);
-//        session.update(skill);
         session.getTransaction().commit();
     }
 
@@ -70,14 +77,26 @@ public class HibernateSkillDaoImpl implements SkillDao {
     public void delete(int id) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        Skill skill = session.get(Skill.class, id);
-        session.delete(skill);
-        session.getTransaction().commit();
+        try {
+            Skill skill = session.get(Skill.class, id);
+            session.delete(skill);
+            session.getTransaction().commit();
+        } catch (RuntimeException e) {
+            session.getTransaction().rollback();
+            throw new IllegalArgumentException("No such ID");
+        }
     }
 
+    /**
+     * Method checks if exist Skill object with same name in database
+     * @param session
+     * @param name
+     * @return
+     * @throws NoResultException
+     */
     private boolean existWithName(Session session, String name) throws NoResultException {
 
-        return session.createQuery("select S.specialty from Skill as S where specialty =\'" + name + "\'").getSingleResult() != null;
+        return session.createQuery("select S.name from Skill as S where name =\'" + name + "\'").getSingleResult() != null;
     }
 
     private boolean existWithId(Session session, int id) throws NoResultException {

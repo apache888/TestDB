@@ -1,18 +1,19 @@
 package com.training.app.model;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 /**
- * Create by Roman Hayda on 27.03.2017.
+ * Create on 27.03.2017.
+ * @author Roman Hayda
+ *
+ * Class describes base entity for exteded entities
+ * contains fields @id, @name
  */
 
 @MappedSuperclass
 public abstract class BaseObject {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     @Column(nullable = false)
     String name;

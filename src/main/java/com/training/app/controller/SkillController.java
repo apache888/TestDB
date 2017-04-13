@@ -10,7 +10,11 @@ import com.training.app.model.Skill;
 import java.util.List;
 
 /**
- * Create by Roman Hayda on 28.03.2017.
+ * Create on 28.03.2017.
+ * @author Roman Hayda
+ *
+ * Class implements interface Controller for Skill object
+ * class contains methods to handle CRUD events
  */
 public class SkillController implements Controller<Skill> {
 //    private SkillDao skillDao = new JdbcSkillDaoImpl();

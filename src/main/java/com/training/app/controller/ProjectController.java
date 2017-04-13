@@ -10,7 +10,11 @@ import com.training.app.model.Project;
 import java.util.List;
 
 /**
- * Create by Roman Hayda on 29.03.2017.
+ * Create on 28.03.2017.
+ * @author Roman Hayda
+ *
+ * Class implements interface Controller for Project object
+ * class contains methods to handle CRUD events
  */
 public class ProjectController implements Controller<Project> {
 //    private ProjectDao projectDao = new JdbcProjectDaoImpl();

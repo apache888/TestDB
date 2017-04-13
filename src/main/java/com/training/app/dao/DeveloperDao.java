@@ -8,24 +8,48 @@ import com.training.app.model.Developer;
 import java.util.List;
 
 /**
- * Create by Roman Hayda on 24.03.2017.
+ * Create on 24.03.2017.
+ * @author Roman Hayda
+ *
+ * interface describes DAO layer for entity Developer
+ * contains CRUD methods
  */
-//DAO layer for object Developer
 public interface DeveloperDao {
 
-    //create object in database
+    /**
+     * create Developer object in database
+     * @param developer - given Developer object
+     * @throws NotUniqueIdException
+     * @throws NotUniqueNameException
+     */
     void create(Developer developer) throws NotUniqueIdException, NotUniqueNameException;
 
-    //receive object by id from database
+    /**
+     * receive Developer object by ID from database
+     * @param id - object ID in database
+     * @return Developer object
+     * @throws NoSuchIdException
+     */
     Developer getById(int id) throws NoSuchIdException;
 
-    //receive list of all objects from database
+    /**
+     * receive list of all Developer objects from database
+     * @return List<Developer>
+     */
     List<Developer> getAll();
 
-    //update object in database
+    /**
+     * update Developer object in database
+     * @param developer - Developer object
+     * @throws NotUniqueNameException
+     * @throws NotUniqueIdException
+     */
     void update(Developer developer) throws NotUniqueNameException, NotUniqueIdException;
 
-    //delete object from database
+    /**
+     * delete Developer object from database by ID
+     * @param id - object ID in database
+     */
     void delete(int id);
 
 }

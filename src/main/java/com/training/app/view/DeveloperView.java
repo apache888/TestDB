@@ -14,7 +14,11 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Create by Roman Hayda on 28.03.2017.
+ * Create on 28.03.2017.
+ * @author Roman Hayda
+ *
+ * Class implements interface View for Developer object
+ * class contains methods to fire CRUD events
  */
 public class DeveloperView implements View {
     private Controller<Developer> controller;
@@ -71,7 +75,10 @@ public class DeveloperView implements View {
         }
     }
 
-    //write to console information about received object
+    /**
+     * write to console information about received object
+     * @param dev - Developer object
+     */
     private void writeById(Developer dev) {
         if (dev == null || (dev.getId() == 0 && dev.getName() == null)){
             ConsoleHelper.writeToConsole("\nThere is no such ID\n");
@@ -80,7 +87,10 @@ public class DeveloperView implements View {
         }
     }
 
-    //write to console information about received list of objects
+    /**
+     *write to console information about received list of objects
+     * @param list - list of Developer objects
+     */
     private void writeAll(List<Developer> list) {
         if (list.isEmpty()) {
             ConsoleHelper.writeToConsole("\nThere are no records to org.training.app.view.\n");
@@ -93,7 +103,10 @@ public class DeveloperView implements View {
         }
     }
 
-    // create object by console dialog
+    /**
+     * create object by console dialog
+     * @return Developer object
+     */
     private Developer createDev() {
         Developer developer;
         int id;

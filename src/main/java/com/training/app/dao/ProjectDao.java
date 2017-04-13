@@ -8,23 +8,47 @@ import com.training.app.model.Project;
 import java.util.List;
 
 /**
- * Create by Roman Hayda on 24.03.2017.
+ * Create on 24.03.2017.
+ * @author Roman Hayda
+ *
+ * interface describes DAO layer for entity Project
+ * contains CRUD methods
  */
-//DAO layer for object Project
 public interface ProjectDao {
 
-    //create object in database
+    /**
+     * create Project object in database
+     * @param project - given Project object
+     * @throws NotUniqueIdException
+     * @throws NotUniqueNameException
+     */
     void create(Project project) throws NotUniqueIdException, NotUniqueNameException;
 
-    //receive object by id from database
+    /**
+     * receive Project object by ID from database
+     * @param id - object ID in database
+     * @return Project object
+     * @throws NoSuchIdException
+     */
     Project getById(int id) throws NoSuchIdException;
 
-    //receive list of all objects from database
+    /**
+     * receive list of all Project objects from database
+     * @return List<Project>
+     */
     List<Project> getAll();
 
-    //update object in database
+    /**
+     * update Project object in database
+     * @param project - Project object
+     * @throws NotUniqueNameException
+     * @throws NotUniqueIdException
+     */
     void update(Project project) throws NotUniqueNameException, NotUniqueIdException;
 
-    //delete object from database
+    /**
+     * delete Project object from database by ID
+     * @param id - object ID in database
+     */
     void delete(int id);
 }

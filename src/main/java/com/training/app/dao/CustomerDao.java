@@ -8,23 +8,47 @@ import com.training.app.model.Customer;
 import java.util.List;
 
 /**
- * Create by Roman Hayda on 24.03.2017.
+ * Create on 24.03.2017.
+ * @author Roman Hayda
+ *
+ * interface describes DAO layer for entity Customer
+ * contains CRUD methods
  */
-//DAO layer for object Customer
 public interface CustomerDao {
 
-    //create object in database
+    /**
+     * create Customer object in database
+     * @param customer - given Customer object
+     * @throws NotUniqueIdException
+     * @throws NotUniqueNameException
+     */
     void create(Customer customer) throws NotUniqueIdException, NotUniqueNameException;
 
-    //receive object by id from database
+    /**
+     * receive Customer object by ID from database
+     * @param id - object ID in database
+     * @return Customer object
+     * @throws NoSuchIdException
+     */
     Customer getById(int id) throws NoSuchIdException;
 
-    //receive list of all objects from database
+    /**
+     * receive list of all Customer objects from database
+     * @return List<Customer>
+     */
     List<Customer> getAll();
 
-    //update object in database
+    /**
+     * update Customer object in database
+     * @param customer - Customer object
+     * @throws NotUniqueNameException
+     * @throws NotUniqueIdException
+     */
     void update(Customer customer) throws NotUniqueNameException, NotUniqueIdException;
 
-    //delete object from database
+    /**
+     * delete Customer object from database by ID
+     * @param id - object ID in database
+     */
     void delete(int id);
 }

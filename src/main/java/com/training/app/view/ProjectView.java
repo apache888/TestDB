@@ -14,7 +14,11 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Create by Roman Hayda on 29.03.2017.
+ * Create on 29.03.2017.
+ * @author Roman Hayda
+ *
+ * Class implements interface View for Project object
+ * class contains methods to fire CRUD events
  */
 public class ProjectView implements View {
     private Controller<Project> controller;
@@ -71,7 +75,10 @@ public class ProjectView implements View {
         }
     }
 
-    //write to console information about received object
+    /**
+     * write to console information about received object
+     * @param project - Project object
+     */
     private void writeById(Project project) {
         if (project == null || (project.getId() == 0 && project.getName() == null)){
             ConsoleHelper.writeToConsole("\nThere is no such ID\n");
@@ -80,7 +87,10 @@ public class ProjectView implements View {
         }
     }
 
-    //write to console information about received list of objects
+    /**
+     *write to console information about received list of objects
+     * @param list - list of Project objects
+     */
     private void writeAll(List<Project> list) {
         if (list.isEmpty()) {
             ConsoleHelper.writeToConsole("\nThere are no records to org.training.app.view.\n");
@@ -93,7 +103,10 @@ public class ProjectView implements View {
         }
     }
 
-    // create object by console dialog
+    /**
+     * create object by console dialog
+     * @return Project object
+     */
     private Project createProject() {
         Project project;
         int id;

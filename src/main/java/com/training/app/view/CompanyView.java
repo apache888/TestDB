@@ -12,7 +12,11 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Create by Roman Hayda on 29.03.2017.
+ * Create on 29.03.2017.
+ * @author Roman Hayda
+ *
+ * Class implements interface View for Company object
+ * class contains methods to fire CRUD events
  */
 public class CompanyView implements View {
     private Controller<Company> controller;
@@ -69,7 +73,10 @@ public class CompanyView implements View {
         }
     }
 
-    //write to console information about received object
+    /**
+     * write to console information about received object
+     * @param company - Company object
+     */
     private void writeById(Company company) {
         if (company == null || (company.getId() == 0 && company.getName() == null)){
             ConsoleHelper.writeToConsole("\nThere is no such ID\n");
@@ -78,7 +85,10 @@ public class CompanyView implements View {
         }
     }
 
-    //write to console information about received list of objects
+    /**
+     *write to console information about received list of objects
+     * @param list - list of Company objects
+     */
     private void writeAll(List<Company> list) {
         if (list.isEmpty()) {
             ConsoleHelper.writeToConsole("\nThere are no records to org.training.app.view.\n");
@@ -91,7 +101,10 @@ public class CompanyView implements View {
         }
     }
 
-    // create object by console dialog
+    /**
+     * create object by console dialog
+     * @return Company object
+     */
     private Company createCompany() {
         Company company;
         int id;

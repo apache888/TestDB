@@ -4,12 +4,16 @@ import javax.persistence.*;
 import java.util.Set;
 
 /**
- * Create by Roman Hayda on 24.03.2017.
+ * Create on 24.03.2017.
+ * @author Roman Hayda
+ *
+ * Class describes entity Developer
  */
 
 @Entity
 @Table(name = "developers", catalog = "it_test_db")
 public class Developer extends BaseObject {
+
     @Column(name = "experience", nullable = false)
     private int experience = 1;
     @Column
@@ -67,7 +71,4 @@ public class Developer extends BaseObject {
         }
         return builder.substring(0, builder.length() - 2) + "}\n";
     }
-
-    //todo
-    //override hashCode and equals, correct createXxxx in xxxView
 }

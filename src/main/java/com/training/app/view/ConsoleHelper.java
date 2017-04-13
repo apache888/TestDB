@@ -1,6 +1,7 @@
 package com.training.app.view;
 
 import com.training.app.controller.*;
+import com.training.app.dao.hibernate.HibernateUtil;
 import com.training.app.exception.NotUniqueIdException;
 import com.training.app.exception.NotUniqueNameException;
 
@@ -9,20 +10,28 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Create by Roman Hayda on 23.03.2017.
+ * Create on 23.03.2017.
+ * @author Roman Hayda
+ *
+ * Class for console working
+ * contains menu method,
+ * read and write to console methods
  */
-//Class for console working
 public class ConsoleHelper {
     private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private View view;
     private Controller controller;
 
-    //main method to start application
+    /**
+     * main method to start application
+     */
     public void startApp() {
         showEntitiesMenu();
     }
 
-    //method show all entities to select
+    /**
+     * method shows all entities to select
+     */
     private void showEntitiesMenu() {
         while (true) {
             try {
@@ -65,6 +74,7 @@ public class ConsoleHelper {
                         showCommandsMenu();
                         break;
                     case 5:
+                        HibernateUtil.shutdown();
                         return;
                     default:
                         throw new IllegalArgumentException();
@@ -77,7 +87,9 @@ public class ConsoleHelper {
         }
     }
 
-    //method show all CRUD commands to manipulate entities
+    /**
+     * method shows all CRUD commands to manipulate entities
+     */
     private void showCommandsMenu() {
         while (true) {
             try {
@@ -117,19 +129,23 @@ public class ConsoleHelper {
             } catch (IllegalArgumentException e) {
                 writeToConsole(e.getMessage());
                 writeToConsole("Wrong command. Try again.");
-            } /*catch (SQLException se) {
-                writeToConsole(se.getMessage());
-                writeToConsole("Failed execute. Try again.");
-            }*/
+            }
         }
     }
 
-    //read line from console to String
+    /**
+     * read line from console to String
+     * @return String input in console
+     * @throws IOException
+     */
     public static String readString() throws IOException {
         return reader.readLine();
     }
 
-    //write to console received message
+    /**
+     * write to console received message
+     * @param message - giving String
+     */
     public static void writeToConsole(String message) {
         System.out.println(message);
     }

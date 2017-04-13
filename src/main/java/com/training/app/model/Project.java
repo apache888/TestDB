@@ -4,17 +4,22 @@ import javax.persistence.*;
 import java.util.Set;
 
 /**
- * Create by Roman Hayda on 24.03.2017.
+ * Create on 24.03.2017.
+ * @author Roman Hayda
+ *
+ * Class describes entity Project
  */
+@SuppressWarnings("ALL")
 @Entity
 @Table(name = "projects", catalog = "it_test_db")
+@Embeddable
 public class Project extends BaseObject{
     @Column(name = "cost")
     private int cost = 1000;
     @ManyToMany
     @JoinTable(name="projects_developers",
-            joinColumns= @JoinColumn(name="project_id", referencedColumnName="id"),//?
-            inverseJoinColumns= @JoinColumn(name="developer_id", referencedColumnName="id")//?
+            joinColumns= @JoinColumn(name="project_id", referencedColumnName="id"),
+            inverseJoinColumns= @JoinColumn(name="developer_id", referencedColumnName="id")
     )
     private Set<Developer> projectDevelopers;
 

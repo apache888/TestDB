@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS it_test_db.developers (
 
 CREATE TABLE IF NOT EXISTS it_test_db.skills (
   id INT NOT NULL AUTO_INCREMENT,
-  specialty VARCHAR(100) NOT NULL UNIQUE ,
+  name VARCHAR(100) NOT NULL UNIQUE ,
   PRIMARY KEY (id));
 
 CREATE TABLE IF NOT EXISTS it_test_db.projects (

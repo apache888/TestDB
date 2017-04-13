@@ -1,10 +1,10 @@
 package com.training.app.dao.hibernate;
 
-import com.training.app.dao.ProjectDao;
+import com.training.app.dao.CustomerDao;
 import com.training.app.exception.NoSuchIdException;
 import com.training.app.exception.NotUniqueIdException;
 import com.training.app.exception.NotUniqueNameException;
-import com.training.app.model.Project;
+import com.training.app.model.Customer;
 import org.hibernate.Session;
 
 import javax.persistence.NoResultException;
@@ -14,66 +14,64 @@ import java.util.List;
  * Create on 08.04.2017.
  * @author Roman Hayda
  *
- * Class implements DAO layer for entity Project
+ * Class implements DAO layer for entity Customer
  * contains CRUD methods
  */
-public class HibernateProjectDaoImpl implements ProjectDao {
+public class HibernateCustomerDaoImpl implements CustomerDao {
 
     @Override
-    public void create(Project project) throws NotUniqueIdException, NotUniqueNameException {
+    public void create(Customer customer) throws NotUniqueIdException, NotUniqueNameException {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         try {
-            if (existWithName(session, project.getName())) {
+            if (existWithName(session, customer.getName())) {
                 session.getTransaction().rollback();
-                throw new NotUniqueNameException("Project name \'" + project.getName() + "\' not unique");
+                throw new NotUniqueNameException("Customer name \'" + customer.getName() + "\' not unique");
             }
         } catch (NoResultException e) {
             //NOP
         }
-        session.save(project);
+        session.save(customer);
         session.flush();
         session.getTransaction().commit();
     }
 
     @Override
-    public Project getById(int id) throws NoSuchIdException {
+    public Customer getById(int id) throws NoSuchIdException {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        Project project = null;
+        Customer customer = null;
         try {
-            project = (Project) session.createQuery("from Project P join fetch P.projectDevelopers where P.id= :id").setParameter("id", id).getSingleResult();
+            customer = (Customer) session.createQuery("from Customer C join fetch C.customerProjects where C.id= :id").setParameter("id", id).getSingleResult();
             session.getTransaction().commit();
         } catch (RuntimeException e) {
             session.getTransaction().rollback();
             throw new NoSuchIdException("No such ID");
         }
-        return project;
+        return customer;
     }
 
     @Override
-    public List<Project> getAll() {
+    public List<Customer> getAll() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        List<Project> projects = (List<Project>) session.createQuery("from Project P join fetch P.projectDevelopers").getResultList();
+        List<Customer> customers = (List<Customer>) session.createQuery("from Customer C join fetch C.customerProjects").getResultList();
         session.getTransaction().commit();
-        return projects;
+        return customers;
     }
 
     @Override
-    public void update(Project project) throws NotUniqueNameException, NotUniqueIdException {
+    public void update(Customer customer) throws NotUniqueNameException, NotUniqueIdException {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         try {
-            Project projectFromDB = getById(project.getId());
-            projectFromDB.setCost(project.getCost());
-            projectFromDB.setProjectDevelopers(project.getProjectDevelopers());
-            session.update(projectFromDB);
+            Customer customerFromDB = (Customer) session.createQuery("from Customer C join fetch C.customerProjects where C.id= :id").setParameter("id", customer.getId()).getSingleResult();
+            customerFromDB.setCustomerProjects(customer.getCustomerProjects());
             session.flush();
             session.getTransaction().commit();
-        } catch (NoSuchIdException e) {
+        } catch (RuntimeException e) {
             session.getTransaction().rollback();
-            create(project);
+            create(customer);
         }
     }
 
@@ -82,8 +80,8 @@ public class HibernateProjectDaoImpl implements ProjectDao {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         try {
-            Project project = session.get(Project.class, id);
-            session.delete(project);
+            Customer customer = session.get(Customer.class, id);
+            session.delete(customer);
             session.flush();
             session.getTransaction().commit();
         } catch (RuntimeException e) {
@@ -93,13 +91,13 @@ public class HibernateProjectDaoImpl implements ProjectDao {
     }
 
     /**
-     * Method checks if exist Project object with same name in database
+     * Method checks if exist Customer object with same name in database
      * @param session
      * @param name
      * @return
      * @throws NoResultException
      */
     private boolean existWithName(Session session, String name) throws NoResultException {
-        return session.createQuery("select P.name from Project as P where P.name =\'" + name + "\'").getSingleResult() != null;
+        return session.createQuery("select C.name from Customer as C where C.name =\'" + name + "\'").getSingleResult() != null;
     }
 }

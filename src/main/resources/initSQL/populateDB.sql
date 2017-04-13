@@ -9,12 +9,12 @@ INSERT INTO developers (name, experience) VALUES ('Sadko', 2);
 INSERT INTO developers (name, experience) VALUES ('Golovko', 4);
 INSERT INTO developers (name, experience) VALUES ('Buchak', 3);
 
-INSERT INTO skills (specialty) VALUES ('Java');
-INSERT INTO skills (specialty) VALUES ('Scala');
-INSERT INTO skills (specialty) VALUES ('C++');
-INSERT INTO skills (specialty) VALUES ('C#');
-INSERT INTO skills (specialty) VALUES ('JS');
-INSERT INTO skills (specialty) VALUES ('PHP');
+INSERT INTO skills (name) VALUES ('Java');
+INSERT INTO skills (name) VALUES ('Scala');
+INSERT INTO skills (name) VALUES ('C++');
+INSERT INTO skills (name) VALUES ('C#');
+INSERT INTO skills (name) VALUES ('JS');
+INSERT INTO skills (name) VALUES ('PHP');
 
 INSERT INTO projects (name) VALUES ('Game');
 INSERT INTO projects (name) VALUES ('Aggregator');

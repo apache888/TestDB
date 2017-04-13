@@ -8,23 +8,47 @@ import com.training.app.model.Company;
 import java.util.List;
 
 /**
- * Create by Roman Hayda on 24.03.2017.
+ * Create on 24.03.2017.
+ * @author Roman Hayda
+ *
+ * interface describes DAO layer for entity Company
+ * contains CRUD methods
  */
-//DAO layer for object Company
 public interface CompanyDao {
 
-    //create object in database
+    /**
+     * create Company object in database
+     * @param company - given Company object
+     * @throws NotUniqueIdException
+     * @throws NotUniqueNameException
+     */
     void create(Company company) throws NotUniqueIdException, NotUniqueNameException;
 
-    //receive object by id from database
+    /**
+     * receive Company object by ID from database
+     * @param id - object ID in database
+     * @return Company object
+     * @throws NoSuchIdException
+     */
     Company getById(int id) throws NoSuchIdException;
 
-    //receive list of all objects from database
+    /**
+     * receive list of all Company objects from database
+     * @return List<Company>
+     */
     List<Company> getAll();
 
-    //update object in database
+    /**
+     * update Company object in database
+     * @param company - Company object
+     * @throws NotUniqueNameException
+     * @throws NotUniqueIdException
+     */
     void update(Company company) throws NotUniqueNameException, NotUniqueIdException;
 
-    //delete object from database
+    /**
+     * delete Company object from database by ID
+     * @param id - object ID in database
+     */
     void delete(int id);
 }

@@ -10,7 +10,11 @@ import com.training.app.model.Developer;
 import java.util.List;
 
 /**
- * Create by Roman Hayda on 28.03.2017.
+ * Create on 28.03.2017.
+ * @author Roman Hayda
+ *
+ * Class implements interface Controller for Developer object
+ * class contains methods to handle CRUD events
  */
 public class DeveloperController implements Controller<Developer> {
 //    private DeveloperDao developerDao = new JdbcDeveloperDaoImpl();

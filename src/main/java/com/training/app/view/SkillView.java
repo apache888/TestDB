@@ -10,7 +10,11 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Create by Roman Hayda on 28.03.2017.
+ * Create on 28.03.2017.
+ * @author Roman Hayda
+ *
+ * Class implements interface View for Skill object
+ * class contains methods to fire CRUD events
  */
 public class SkillView implements View {
     private Controller<Skill> controller;
@@ -67,16 +71,22 @@ public class SkillView implements View {
         }
     }
 
-    //write to console information about received object
+    /**
+     * write to console information about received object
+     * @param skill - Skill object
+     */
     private void writeById(Skill skill) {
-        if (skill == null || (skill.getId() == 0 && skill.getSpecialty() == null)){
+        if (skill == null || (skill.getId() == 0 && skill.getName() == null)){
             ConsoleHelper.writeToConsole("\nThere is no such ID\n");
         }else {
             ConsoleHelper.writeToConsole("\n" + skill.toString() + "\n");
         }
     }
 
-    //write to console information about received list of objects
+    /**
+     * write to console information about received list of objects
+     * @param list - list of Skill objects
+     */
     private void writeAll(List<Skill> list) {
         if (list.isEmpty()) {
             ConsoleHelper.writeToConsole("\nThere are no records to org.training.app.view.\n");
@@ -89,7 +99,10 @@ public class SkillView implements View {
         }
     }
 
-    // create object by console dialog
+    /**
+     * create object by console dialog
+     * @return Skill object
+     */
     private Skill createSkill() {
         int id;
         while (true) {
@@ -111,7 +124,9 @@ public class SkillView implements View {
                 ConsoleHelper.writeToConsole("Failed input. Try again");
             }
         }
-//        return new Skill(id, specialty);
-        return new Skill(specialty);
+        Skill skill = new Skill();
+        skill.setName(specialty);
+        skill.setId(id);
+        return skill;
     }
 }
