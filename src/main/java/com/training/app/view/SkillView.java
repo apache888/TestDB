@@ -89,7 +89,7 @@ public class SkillView implements View {
      */
     private void writeAll(List<Skill> list) {
         if (list.isEmpty()) {
-            ConsoleHelper.writeToConsole("\nThere are no records to org.training.app.view.\n");
+            ConsoleHelper.writeToConsole("\nThere are no records to view.\n");
         } else {
             ConsoleHelper.writeToConsole("\nAll records of table 'skills'\n");
             for (Skill skill : list) {

@@ -93,7 +93,7 @@ public class ProjectView implements View {
      */
     private void writeAll(List<Project> list) {
         if (list.isEmpty()) {
-            ConsoleHelper.writeToConsole("\nThere are no records to org.training.app.view.\n");
+            ConsoleHelper.writeToConsole("\nThere are no records to view.\n");
         } else {
             ConsoleHelper.writeToConsole("\nAll records of table 'projects'\n");
             for (Project proj : list) {

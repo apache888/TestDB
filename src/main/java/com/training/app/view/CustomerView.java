@@ -94,7 +94,7 @@ public class CustomerView implements View {
      */
     private void writeAll(List<Customer> list) {
         if (list.isEmpty()) {
-            ConsoleHelper.writeToConsole("\nThere are no records to org.training.app.view.\n");
+            ConsoleHelper.writeToConsole("\nThere are no records to view.\n");
         } else {
             ConsoleHelper.writeToConsole("\nAll records of table 'customers'\n");
             for (Customer customer : list) {

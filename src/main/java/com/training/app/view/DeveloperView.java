@@ -93,7 +93,7 @@ public class DeveloperView implements View {
      */
     private void writeAll(List<Developer> list) {
         if (list.isEmpty()) {
-            ConsoleHelper.writeToConsole("\nThere are no records to org.training.app.view.\n");
+            ConsoleHelper.writeToConsole("\nThere are no records to view.\n");
         } else {
             ConsoleHelper.writeToConsole("\nAll records of table 'developers'\n");
             for (Developer dev : list) {

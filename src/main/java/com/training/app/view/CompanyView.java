@@ -91,7 +91,7 @@ public class CompanyView implements View {
      */
     private void writeAll(List<Company> list) {
         if (list.isEmpty()) {
-            ConsoleHelper.writeToConsole("\nThere are no records to org.training.app.view.\n");
+            ConsoleHelper.writeToConsole("\nThere are no records to view.\n");
         } else {
             ConsoleHelper.writeToConsole("\nAll records of table 'companies'\n");
             for (Company company : list) {
