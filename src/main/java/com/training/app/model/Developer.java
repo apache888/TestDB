@@ -20,8 +20,8 @@ public class Developer extends BaseObject {
     private int salary = 500;
     @ManyToMany
     @JoinTable(name="developers_skills",
-            joinColumns= @JoinColumn(name="developer_id", referencedColumnName="id"),//?
-            inverseJoinColumns= @JoinColumn(name="skill_id", referencedColumnName="id")//?
+            joinColumns= @JoinColumn(name="developer_id", referencedColumnName="id"),
+            inverseJoinColumns= @JoinColumn(name="skill_id", referencedColumnName="id")
     )
     private Set<Skill> skills;
 

@@ -23,14 +23,6 @@ public class HibernateDeveloperDaoImpl implements DeveloperDao {
     public void create(Developer developer) throws NotUniqueIdException, NotUniqueNameException {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        /*try {
-            if (existWithName(session, developer.getName())) {
-                session.getTransaction().rollback();
-                throw new NotUniqueNameException("Developer name \'" + developer.getName() + "\' not unique");
-            }
-        } catch (NoResultException e) {
-            //NOP
-        }*/
         session.save(developer);
         session.flush();
         session.getTransaction().commit();
